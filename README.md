@@ -5,6 +5,7 @@
 - Flask 0.12.2 (https://pypi.python.org/pypi/Flask/0.12.2#downloads)
 - Terminal (https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
 - Text editor (https://www.sublimetext.com/3)
+- SQLite (https://www.tutorialspoint.com/sqlite/sqlite_installation.htm)
 - A positive attitude
 
 ## I'll add more when I figure out what I'm doing

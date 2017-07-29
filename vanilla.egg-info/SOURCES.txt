@@ -1,0 +1,9 @@
+MANIFEST.in
+vanilla/__init__.py
+vanilla/schema.sql
+vanilla/vanilla.py
+vanilla.egg-info/PKG-INFO
+vanilla.egg-info/SOURCES.txt
+vanilla.egg-info/dependency_links.txt
+vanilla.egg-info/requires.txt
+vanilla.egg-info/top_level.txt

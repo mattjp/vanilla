@@ -1,0 +1,3 @@
+graft vanilla/templates
+graft vanilla/static
+include vanilla/schema.sql
