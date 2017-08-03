@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Vanilla Clothing</title>
+
+    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/style.css" rel="stylesheet">
+  </head>
+
+  <body align="center">
+    <h1>Vanilla Clothing Co.</h1>
+
+    <!-- display login button if current visitor isn't logged in -->
+    {% if not session.logged_in %}
+    <h2>Login or signup whatever dude i don't fuckin' care what you do</h2>
+
+    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('show_home') }}" method=post>
+      <dl>
+        <dt>email:
+        <dd><input type="text" name="email">
+        <dt>password:
+        <dd><input type="password" name="password">
+        <dd><input type="submit" name="action" value="login">
+        <dd><input type="submit" name="action" value="signup">
+      </dl>
+    </form>
+
+    <form action="{{ url_for('show_home') }}"
+
+    <!-- show logout button if current visitor is logged in -->
+    {% else %}
+    <h2><a href="{{ url_for('logout') }}">log out</a></h2>
+    {% endif %}
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+
+
+</head>
+
+<!-- <title>Vanilla</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+<div class=page>
+  <h1>Vanilla</h1>
+  <div class=metanav>
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('logout') }}">log out</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div> --> 
+
+
+
+
+
+
