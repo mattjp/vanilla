@@ -24,9 +24,9 @@
     <form action="{{ url_for('show_home') }}" method=post>
       <dl>
         <dt>email:
-        <dd><input type="text" name="email">
+        <dd><input type="text" name="email" required>
         <dt>password:
-        <dd><input type="password" name="password">
+        <dd><input type="password" name="password" required>
         <dd><input type="submit" name="action" value="login">
         <dd><input type="submit" name="action" value="signup">
       </dl>

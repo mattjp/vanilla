@@ -19,10 +19,25 @@
     {% if session.logged_in %}
     <p> {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
 
-    {% if current_user.id[1] == 'vendor' %}
-    <button>click me to add item</button>
+    {% if current_user.id[0] == 'Dog Flat ' %}
+    <button onclick="document.getElementById('add_btn').style.display='block'" style="width:auto;">Add New Item</button>
+    <div id="add_btn" class="modal">
+<!--       <span onclick="document.getElementById('add_btn').style.display='none'" class="close" title="Close Modal">×</span> -->
+      <form action="{{ url_for('sample_vendor') }}" method="post">
+        <div class="container">
+          <input type="text" placeholder="Name" name="itemName" required>
+
+          <input type="text" placeholder="Item description" name="itemDesc" required>
+
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('add_btn').style.display='none'" class="cancelbtn">Cancel</button>
+            <button type="submit" class="signupbtn">Add Item</button>
+          </div>
+        </div>
+      </form>
+    </div>
     {% endif %}
-    
+
     {% else %}
     <p> log in before you get fucking flattened </p>
     {% endif %}
@@ -31,4 +46,16 @@
 
     <h3><a href="{{ url_for('show_home') }}">back to safety</h3>
   </body>
+
+  <script>
+  // Get the modal
+  var modal = document.getElementById('add_btn');
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+  </script>
 </html>
