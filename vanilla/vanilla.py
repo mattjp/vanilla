@@ -1,19 +1,28 @@
-import os, sqlite3
+import os, sqlite3, re, flask_login
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_bcrypt import Bcrypt
-# from email_validator import validate_email, EmailNotValidError
+
+# Data types ###################################################################
+class User(flask_login.UserMixin):
+	def __init__(self, id, user_type = None):
+		self.id = (id, user_type)
+
+	def get_id(self):
+		return (self.id[0], self.id[1])
 
 # Application setup ############################################################
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 bcrypt = Bcrypt(app)
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 
 app.config.update(dict(
 	DATABASE = os.path.join(app.root_path, 'vanilla.db'),
-	SECRET_KEY = 'development key'
-	# USERNAME = 'admin',
-	# PASSWORD = 'default'
+	SECRET_KEY = 'development key' # TODO change me!
 ))
 app.config.from_envvar('VANILLA_SETTINGS', silent = True)
 
@@ -51,7 +60,6 @@ def query_db(query, args = (), one = False):
 	return (rv[0] if rv else None) if one else rv
 
 def insert(table, fields = (), values = ()):
-	# cur = g.db.cursor()
 	cur = get_db()
 	query = 'insert into %s (%s) values (%s)' % (
 		table,
@@ -59,63 +67,97 @@ def insert(table, fields = (), values = ()):
 		', '.join(['?'] * len(values))
 	)
 	cur.execute(query, values)
-	# g.db.commit()
 	cur.commit()
 	cur.close()
+
+@app.cli.command('insert-vendor')
+def insert_vendor_command():
+	v_name = input('Vendor Name: ')
+	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
+	v_em = input('Vendor Email: ' )
+	insert('vendors', ['vendorName', 'password', 'email'], [v_name, v_pw, v_em])
+	print('Added', v_name, 'to vendors.')
+
+# User Functions ###############################################################
+@login_manager.user_loader
+def user_loader(id):
+	return User(id[0], id[1])
+
+def complete_login(id, cur_type):
+	session['logged_in'] = True
+	flask_login.login_user(User(id, cur_type))
 
 # View functions ###############################################################
 @app.route('/')
 def show_home():
-    db = get_db()
-    return render_template('home.html')
+	return render_template('home.html')
 
-@app.route('/contact')
-def show_contact():
-	db = get_db()
-	return render_template('contact.html')
+@app.route('/sample_vendor')
+def sample_vendor():
+	return render_template('sample_vendor.html')
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
 	error = None
+	# Handle login POST requests
 	if request.method == 'POST' and request.form['action'] == 'login':
-		print('=== attempting login===')
-		req_email = request.form['email']
-		req_password = request.form['password']
-		user = query_db('select * from users where email = ?', [req_email], True)
+		req_em = request.form['email']
+		req_pw = request.form['password']
+		# Query both databases
+		user = query_db('select * from users where email = ?', [req_em], True)
+		vendor = query_db('select * from vendors where email = ?', [req_em], True)
+		# If the user exists
 		if user:
-			if bcrypt.check_password_hash(user['password'], req_password):
-				session['logged_in'] = True
-				flash('Successfully logged in')
-				return redirect(url_for('show_contact'))
+			if bcrypt.check_password_hash(user['password'], req_pw):
+				complete_login(req_em, 'user')
+				return render_template('home.html')
 			else:
-				error = 'Incorrect password'
+				error = 'Incorrect password for supplied email'
+		# If the vendor exists
+		elif vendor:
+			if bcrypt.check_password_hash(vendor['password'], req_pw):
+				complete_login(vendor['vendorName'], 'vendor')
+				return render_template('home.html')
+			else:
+				error = 'wrong vendor password'
+		# Email doesn't exist in either table
 		else:
-			error = 'Not a valid email'
+			error = 'Email does not exist in either database'
+
+	# Handle sign up POST requests
 	elif request.method == 'POST' and request.form['action'] == 'signup':
-		print('=== signing up ===')
-		req_email = request.form['email']
-		if request.form['password']:
-			pw = bcrypt.generate_password_hash(request.form['password'])
-			user = query_db('select * from users where email = ?', [req_email], True)
-			if not user: # check if the email is valid AS WELL YOU IDIOT
-				insert('users', ['password', 'email'], [pw, req_email])
-				# try:
-				# 	v = validate_email(req_email)
-				# 	valid_email = v['email']
-				# 	insert('users', [password, email], [pw, valid_email])
-				# except EmailNotValidError as e:
-				# 	print(str(e))
-				# 	print('THAT AINT AN EMAIL')
+		req_em = request.form['email']
+		req_pw = request.form['password']
+		# Assert email form is valid
+		valid_form = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$'
+		valid_em = re.match(valid_form, req_em)
+		# Throw error if email is not valid
+		if valid_em == None:
+			error = 'SIGN-IN: Not a valid email address'
+		# Check to see if a password was entered
+		elif req_pw:
+			# Query both databases
+			user = query_db('select * from users where email = ?', [req_em], True)
+			vendor = query_db('select * from vendors where email = ?', [req_em], True)
+			# Create new user if the email doesn't exist in either table 
+			if not user and not vendor:
+				# Hash & salt password, store new user in table
+				enc_pw = bcrypt.generate_password_hash(req_pw)
+				insert('users', ['password', 'email'], [enc_pw, req_em])
+				complete_login(req_em, 'user')
+				return render_template('home.html')
 			else:
-				print('OOOOOOOOH FUCK THAT iS A USER ALREADY BRUH')
+				error = 'Email already exists in database'
+		# Email was valid, but no password was supplied
 		else:
-			print('you aint even got a password fuck outta here')
+			error = 'No password supplied'
+	# Render home screen for non-valid POST requests
 	return render_template('home.html', error = error)
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
-    flash('You were successfully logged out')
+    flask_login.logout_user()
     return redirect(url_for('show_home'))
 
 
