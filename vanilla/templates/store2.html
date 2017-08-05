@@ -7,22 +7,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>sample vendor</title>
+    <title>store2</title>
 
     <link href="../static/bootstrap.min.css" rel="stylesheet">
     <link href="../static/style.css" rel="stylesheet">
   </head>
 
   <body align="center">
-    <h1>I'll flatten you like my fucking dog</h1>
+    <h1>Second store for testing purposes</h1>
 
     {% if session.logged_in %}
     <p> {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
 
-    {% if current_user.id[0] == 'sample_vendor' %}
+    {% if current_user.id[0] == 'store2' %}
     <button onclick="document.getElementById('add_btn').style.display='block'" style="width:auto;">Add New Item</button>
     <div id="add_btn" class="modal">
-      <form action="{{ url_for('sample_vendor_add') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ url_for('store2_add') }}" method="POST" enctype="multipart/form-data">
         <div class="container">
           <input type="text" placeholder="Name" name="itemName" required>
           <input type="text" placeholder="Item description" name="itemDesc" required>
