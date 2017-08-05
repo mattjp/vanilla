@@ -157,6 +157,7 @@ def add_item(item_name, item_desc, item_img, vendor):
 # View Functions - Sample ######################################################
 @app.route('/sample_vendor')
 def show_sample_vendor():
+	items = query_db('select * from items where vendor = "sample_vendor"')
 	return render_template('sample_vendor.html')
 
 @app.route('/sample_vendor', methods = ['GET', 'POST'])
@@ -169,8 +170,9 @@ def sample_vendor_add():
 # View Functions - Store2 ######################################################
 @app.route('/store2')
 def show_store2():
-	items = query_db()
-	return render_template('store2.html')
+	items = query_db('select * from items where vendor = "store2"')
+	# return strings?
+	return render_template('store2.html', items = items)
 
 @app.route('/store2', methods = ['GET', 'POST'])
 def store2_add():

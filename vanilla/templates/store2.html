@@ -42,10 +42,16 @@
 
     <h3><a href="{{ url_for('show_home') }}">back to safety</h3>
 
-    
-    
-
-
+    <table>
+    {% for item in items %}
+      <tr>
+        <td><p> {{ item['itemName'] }} </p></td>
+        <td><p> {{ item['description'] }} </p></td>
+        <td><p> {{ item['vendor'] }} </p></td>
+        <td><p> {{ item['pathToImg'] }} </p></td>
+      </tr>
+    {% endfor %}
+    </table>
 
   </body>
 
