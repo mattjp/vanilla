@@ -77,6 +77,7 @@ def insert_vendor_command():
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
 	v_em = input('Vendor Email: ' )
 	insert('vendors', ['vendorName', 'password', 'email'], [v_name, v_pw, v_em])
+	os.mkdir('assets/' + v_name)
 	print('Added', v_name, 'to vendors.')
 
 @app.cli.command('initdb')
@@ -161,19 +162,22 @@ def show_sample_vendor():
 @app.route('/sample_vendor', methods = ['GET', 'POST'])
 def sample_vendor_add():
 	if request.method == 'POST':
-		item_name = request.form['itemName']
-		item_desc = request.form['itemDesc']
-		item_img = request.files['file']
-		app.config['UPLOAD_FOLDER'] = 'assets/sample_vendor/'
-		fname = secure_filename(item_img.filename)
-		full_path = 'assets/sample_vendor/' + fname
-		item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
-		insert('items', ['itemName', 'description', 'vendor', 'pathToImg'], \
-			[item_name, item_desc, 'Dog Flat ', full_path])
+		add_item(request.form['itemName'], request.form['itemDesc'], \
+			request.files['file'], 'sample_vendor')
 	return redirect(url_for('show_sample_vendor'))
 
 # View Functions - Store2 ######################################################
+@app.route('/store2')
+def show_store2():
+	items = query_db()
+	return render_template('store2.html')
 
+@app.route('/store2', methods = ['GET', 'POST'])
+def store2_add():
+	if request.method == 'POST':
+		add_item(request.form['itemName'], request.form['itemDesc'], \
+			request.files['file'], 'store2')
+	return redirect(url_for('show_store2'))
 
 # View Functions - Logout ######################################################
 @app.route('/logout')
