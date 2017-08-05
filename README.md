@@ -1,3 +1,5 @@
+[![Stories in Ready](https://badge.waffle.io/mattjp/vanilla.svg?label=ready&title=Ready)](http://waffle.io/mattjp/vanilla)
+
 # Vanilla Clothing Company
 (A Heavy Industries Holding Company subsidiary)
 
