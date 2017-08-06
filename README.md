@@ -1,7 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/mattjp/vanilla.svg?label=ready&title=Ready)](http://waffle.io/mattjp/vanilla)
 
 # Vanilla Clothing Company
-(A Heavy Industries Holding Company subsidiary)
+(Still not sure what the name is going to be)
 
 ## What you (Chris) will need:
 - [Python 3.6.x](https://www.python.org/)
@@ -11,10 +11,3 @@
 - [Text editor](https://www.sublimetext.com/3)
 - [SQLite](https://www.tutorialspoint.com/sqlite/sqlite_installation.htm)
 - A positive attitude
-
-## What I (Matt) have to do:
-- Add Button functionality in Python
-- See if the database is actually doing anything
-  - Relevant schema
-- Make it not look like shit
-  - Agree on site design
