@@ -75,6 +75,12 @@ def delete_from_db(query, args = ()):
 	cur.commit()
 	cur.close()
 
+def update_db(query, args = ()):
+	cur = get_db()
+	cur.execute(query, args)
+	cur.commit()
+	cur.close()
+
 
 # Command Line Functions #######################################################
 @app.cli.command('insert-vendor')
@@ -148,6 +154,15 @@ def login():
 				error = 'Email already exists in database'
 		else:
 			error = 'No password supplied'
+	elif request.method == 'POST' and request.form['action'] == 'change':
+		user_id = flask_login.current_user.id[0]
+		new_pw = bcrypt.generate_password_hash(request.form['new_password'])
+		if flask_login.current_user.id[1] == 'user':
+			update_db('update users set password = ? where email = ?', \
+				[new_pw, user_id])
+		else:
+			update_db('update vendors set password = ? where vendorName = ?', \
+				[new_pw, user_id])
 	return render_template('home.html', error = error)
 
 # Add item to vendor page

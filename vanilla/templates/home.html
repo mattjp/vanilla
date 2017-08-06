@@ -37,6 +37,13 @@
     {% else %}
     <p>hello {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
 
+    <button onclick="document.getElementById('change_btn').style.display='block'" style="width:auto;">change your password, dungus</button>
+    <div id="change_btn" class="modal">
+    <form action="{{ url_for('show_home') }}" method="POST">
+      <input type="password" placeholder="New Password" name="new_password" required>
+      <button type="submit" class="submit_btn" name="action" value="change">update</button>
+    </div>
+
     <h2><a href="{{ url_for('logout') }}">log out</a></h2>
     {% endif %}
 
@@ -52,4 +59,16 @@
 
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
   </body>
+
+  <script>
+  // Get the modal
+  var modal = document.getElementById('change_btn');
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+  </script>
 </html>
