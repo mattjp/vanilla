@@ -56,9 +56,6 @@
         <td><form action="{{ url_for('store2_update') }}" method="POST">
           <input type="hidden" name="action" value="del_item"> 
           <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
-          <!-- <input type="hidden" name="itemDesc" value="{{ item['description'] }}"> -->
-          <!-- <input type="hidden" name="vendor" value="{{ item['vendor'] }}"> -->
-          <!-- <input type="hidden" name="pathToImg" value="{{ item['pathToImg'] }}"> -->
           <button type="submit" value="delete">delete Item</button>
         </form></td>
         {% endif %}

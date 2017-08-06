@@ -16,16 +16,20 @@
   <body align="center">
     <h1>I'll flatten you like my fucking dog</h1>
 
+    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+
     {% if session.logged_in %}
     <p> {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
 
     {% if current_user.id[0] == 'sample_vendor' %}
     <button onclick="document.getElementById('add_btn').style.display='block'" style="width:auto;">Add New Item</button>
     <div id="add_btn" class="modal">
-      <form action="{{ url_for('sample_vendor_add') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ url_for('sample_vendor_update') }}" method="POST" enctype="multipart/form-data">
         <div class="container">
+          <input type="hidden" name="action" value="add_item"> 
           <input type="text" placeholder="Name" name="itemName" required>
           <input type="text" placeholder="Item description" name="itemDesc" required>
+          <input type="text" placeholder="Price (optional)" name="itemPrice">
           <input type="file" name="file" accept="image/*" required>
           <div class="clearfix">
             <button type="button" onclick="document.getElementById('add_btn').style.display='none'" class="cancel_btn">Cancel</button>
@@ -50,7 +54,15 @@
         <td><p> {{ item['itemName'] }} </p></td>
         <td><p> {{ item['description'] }} </p></td>
         <td><p> {{ item['vendor'] }} </p></td>
-        <td><img src="{{ item['pathToImg'] }}" height="400px" width="400px"></td>
+        <td><p> {{ item['price'] }}</p></td>
+        <td><img src="{{ item['pathToImg'] }}" height="200px" width="200px"></td>
+        {% if current_user.id[0] == 'store2' %}
+        <td><form action="{{ url_for('store2_update') }}" method="POST">
+          <input type="hidden" name="action" value="del_item"> 
+          <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
+          <button type="submit" value="delete">delete Item</button>
+        </form></td>
+        {% endif %}
       </tr>
     {% endfor %}
     </table>

@@ -167,6 +167,12 @@ def login():
 
 # Add item to vendor page
 def add_item(item_name, item_desc, item_img, vendor, item_price):
+	exists = query_db('select * from items where itemName = ?', [item_name])
+	# TODO this only kind of work
+	if exists:
+		print('CANNOT HAVE ITEMS WITH THE SAME NAME')
+		site = vendor + '.html'
+		return render_template(site, error = 'cannot have item with same name')
 	folder = 'static/' + vendor + '/'
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
@@ -193,7 +199,7 @@ def show_sample_vendor():
 	return render_template('sample_vendor.html', items = items)
 
 @app.route('/sample_vendor', methods = ['GET', 'POST'])
-def sample_vendor_add():
+def sample_vendor_update():
 	STORE = 'sample_vendor'
 	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
 		if request.form['action'] == 'add_item':
