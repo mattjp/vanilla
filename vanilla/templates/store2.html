@@ -52,7 +52,7 @@
         <td><p> {{ item['vendor'] }} </p></td>
         <td><p> {{ item['price'] }}</p></td>
         <td><img src="{{ item['pathToImg'] }}" height="200px" width="200px"></td>
-        {% if current_user.id[0] == 'store2' %}
+        {% if session.logged_in and current_user.id[0] == 'store2' %}
         <td><form action="{{ url_for('store2_update') }}" method="POST">
           <input type="hidden" name="action" value="del_item"> 
           <input type="hidden" name="itemName" value="{{ item['itemName'] }}">

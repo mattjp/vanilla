@@ -9,8 +9,8 @@
 
     <title>sample vendor</title>
 
-    <link href="../static/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/style.css" rel="stylesheet">
+    <link href="../static/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/styles/style.css" rel="stylesheet">
   </head>
 
   <body align="center">
@@ -56,8 +56,8 @@
         <td><p> {{ item['vendor'] }} </p></td>
         <td><p> {{ item['price'] }}</p></td>
         <td><img src="{{ item['pathToImg'] }}" height="200px" width="200px"></td>
-        {% if current_user.id[0] == 'store2' %}
-        <td><form action="{{ url_for('store2_update') }}" method="POST">
+        {% if session.logged_in and current_user.id[0] == 'sample_vendor' %}
+        <td><form action="{{ url_for('sample_vendor_update') }}" method="POST">
           <input type="hidden" name="action" value="del_item"> 
           <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
           <button type="submit" value="delete">delete Item</button>

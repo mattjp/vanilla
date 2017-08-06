@@ -1,0 +1,38 @@
+body {
+  padding-top: 60px;
+  background-color: #c4d0d9;
+}
+
+.nav ul {
+	margin: 0px;
+}
+
+.navbar-btn {
+	margin-top: 15px;
+	vertical-align: middle;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.navbar-right h1 {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	vertical-align: middle;
+	font-family: 'Roboto Slab', serif;
+	font-weight: 100;
+	color: #ffffff;
+}
+
+.navbar-fixed-top {
+	background-color: #676a6f;
+	opacity: 0.6;
+	border-width: 0px;
+}
+
+.navbar-nav > li > a {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+}
+
+.navbar-fixed-top .container {
+	background-color: red;
+}

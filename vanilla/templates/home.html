@@ -7,21 +7,40 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Vanilla Clothing</title>
+    <title>vanilla</title>
 
-    <link href="../static/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/style.css" rel="stylesheet">
+    <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:100" rel="stylesheet">
+
+
   </head>
 
-  <body align="center">
-    <h1>Vanilla Clothing Co.</h1>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li>
+            <button class="btn btn-default navbar-btn" onclick="document.getElementById('login_btn').style.display='block'" style="width:auto;">Login \ Sign Up</button>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="{{ url_for('show_home') }}"><h1>Heavy Industries Holding Co.</h1></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <!-- display login button if current visitor isn't logged in -->
     {% if not session.logged_in %}
-    <h2>Login or signup whatever dude i don't fuckin' care what you do</h2>
 
     {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('show_home') }}" method=post>
+
+    
+
+    <div id="login_btn" class="modal">
+    <form action="{{ url_for('show_home') }}" method="POST">
       <dl>
         <dt>email:
         <dd><input type="text" name="email" required>
@@ -31,6 +50,7 @@
         <dd><input type="submit" name="action" value="signup">
       </dl>
     </form>
+    </div>
 
 
     <!-- show logout button if current visitor is logged in -->
@@ -54,15 +74,12 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!--     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+    <script src="../static/scripts/bootstrap.min.js"></script>
   </body>
 
   <script>
   // Get the modal
-  var modal = document.getElementById('change_btn');
+  var modal = document.getElementById('login_btn');
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
