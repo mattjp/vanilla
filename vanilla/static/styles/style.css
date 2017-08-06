@@ -3,6 +3,7 @@ body {
   background-color: #c4d0d9;
 }
 
+/* Nav Bar ********************************************************************/
 .nav ul {
 	margin: 0px;
 }
@@ -10,7 +11,18 @@ body {
 .navbar-btn {
 	margin-top: 15px;
 	vertical-align: middle;
+	background-color: #676a6f;
 	font-family: 'Open Sans', sans-serif;
+	color: #fff;
+	border-radius: 0px;
+	border-width: 1px;
+	border-color: #fff;
+	transition-duration: 0.25s;
+}
+
+.navbar-btn:hover {
+	color: #676a6f;
+	background-color: #fff;
 }
 
 .navbar-right h1 {
@@ -19,7 +31,7 @@ body {
 	vertical-align: middle;
 	font-family: 'Roboto Slab', serif;
 	font-weight: 100;
-	color: #ffffff;
+	color: #fff;
 }
 
 .navbar-fixed-top {
@@ -34,5 +46,35 @@ body {
 }
 
 .navbar-fixed-top .container {
-	background-color: red;
+	/*background-color: red;*/
 }
+
+
+/* Modal **********************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
