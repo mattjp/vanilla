@@ -77,7 +77,7 @@ def insert_vendor_command():
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
 	v_em = input('Vendor Email: ' )
 	insert('vendors', ['vendorName', 'password', 'email'], [v_name, v_pw, v_em])
-	os.mkdir('assets/' + v_name)
+	os.mkdir('static/' + v_name)
 	print('Added', v_name, 'to vendors.')
 
 @app.cli.command('initdb')
@@ -146,19 +146,20 @@ def login():
 
 # Add item to vendor page
 def add_item(item_name, item_desc, item_img, vendor):
-	folder = 'assets/' + vendor + '/'
+	folder = 'static/' + vendor + '/'
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
-	full_path = folder + fname
+	full_path = '../' + folder + fname
 	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg'], \
 		[item_name, item_desc, vendor, full_path])
+
 
 # View Functions - Sample ######################################################
 @app.route('/sample_vendor')
 def show_sample_vendor():
 	items = query_db('select * from items where vendor = "sample_vendor"')
-	return render_template('sample_vendor.html')
+	return render_template('sample_vendor.html', items = items)
 
 @app.route('/sample_vendor', methods = ['GET', 'POST'])
 def sample_vendor_add():
@@ -167,19 +168,30 @@ def sample_vendor_add():
 			request.files['file'], 'sample_vendor')
 	return redirect(url_for('show_sample_vendor'))
 
+
 # View Functions - Store2 ######################################################
 @app.route('/store2')
 def show_store2():
 	items = query_db('select * from items where vendor = "store2"')
-	# return strings?
 	return render_template('store2.html', items = items)
 
 @app.route('/store2', methods = ['GET', 'POST'])
-def store2_add():
+def store2_add(): #store2_update
+	print("=== ", request.form['action'])
 	if request.method == 'POST':
+		print('here agina here again')
 		add_item(request.form['itemName'], request.form['itemDesc'], \
 			request.files['file'], 'store2')
+	else:
+		print('fuckidty')
 	return redirect(url_for('show_store2'))
+
+# @app.route('/store2', methods = ['GET', 'POST'])
+# def store2_delete():
+# 	print("FUCKKKKKKK")
+# 	if request.method == 'POST':
+# 		print('boner')
+
 
 # View Functions - Logout ######################################################
 @app.route('/logout')

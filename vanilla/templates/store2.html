@@ -40,18 +40,32 @@
     <p> log in before you get fucking flattened </p>
     {% endif %}
 
-    <h3><a href="{{ url_for('show_home') }}">back to safety</h3>
+    <h3><a href="{{ url_for('show_home') }}">back to safety</a></h3>
 
-    <table>
+    <table align="center">
     {% for item in items %}
       <tr>
         <td><p> {{ item['itemName'] }} </p></td>
         <td><p> {{ item['description'] }} </p></td>
         <td><p> {{ item['vendor'] }} </p></td>
-        <td><p> {{ item['pathToImg'] }} </p></td>
+        <td><img src="{{ item['pathToImg'] }}" height="200px" width="200px"></td>
+        {% if current_user.id[0] == 'store2' %}
+        <td><!-- <form action="{{ url_for('store2_add') }}" method="POST">
+          <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
+          <input type="hidden" name="itemDesc" value="{{ item['description'] }}">
+          <input type="hidden" name="vendor" value="{{ item['vendor'] }}">
+          <input type="hidden" name="pathToImg" value="{{ item['pathToImg'] }}">
+          <button type="submit" value="delete">delete Item</button>
+        </form> --></td>
+        {% endif %}
       </tr>
     {% endfor %}
     </table>
+
+    <!-- <img src="../static/store2/real_good_picture.jpg"> -->
+    <!-- <img src=""> -->
+
+
 
   </body>
 
