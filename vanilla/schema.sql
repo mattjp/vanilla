@@ -16,5 +16,6 @@ create table if not exists items (
 	itemName text not null,
 	description text not null,
 	vendor text not null,
+	price text,
 	pathToImg text not null
 );

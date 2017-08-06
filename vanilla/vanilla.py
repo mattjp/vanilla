@@ -69,6 +69,12 @@ def insert(table, fields = (), values = ()):
 	cur.commit()
 	cur.close()
 
+def delete_from_db(query, args = ()):
+	cur = get_db()
+	cur.execute(query, args)
+	cur.commit()
+	cur.close()
+
 
 # Command Line Functions #######################################################
 @app.cli.command('insert-vendor')
@@ -145,52 +151,61 @@ def login():
 	return render_template('home.html', error = error)
 
 # Add item to vendor page
-def add_item(item_name, item_desc, item_img, vendor):
+def add_item(item_name, item_desc, item_img, vendor, item_price):
 	folder = 'static/' + vendor + '/'
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
 	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
-	insert('items', ['itemName', 'description', 'vendor', 'pathToImg'], \
-		[item_name, item_desc, vendor, full_path])
+	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
+		[item_name, item_desc, vendor, full_path, item_price])
+
+# Remove item from vendor page
+def delete_item(item_name, vendor):
+	path = query_db('select * from items where vendor = ? and itemName = ?', \
+		[vendor, item_name], True)['pathToImg'][3:]
+	print(path)
+	os.remove(path)
+	delete_from_db('delete from items where vendor = ? and itemName = ?', \
+		[vendor, item_name])
 
 
 # View Functions - Sample ######################################################
 @app.route('/sample_vendor')
 def show_sample_vendor():
-	items = query_db('select * from items where vendor = "sample_vendor"')
+	STORE = 'sample_vendor'
+	items = query_db('select * from items where vendor = ?', [STORE])
 	return render_template('sample_vendor.html', items = items)
 
 @app.route('/sample_vendor', methods = ['GET', 'POST'])
 def sample_vendor_add():
-	if request.method == 'POST':
-		add_item(request.form['itemName'], request.form['itemDesc'], \
-			request.files['file'], 'sample_vendor')
+	STORE = 'sample_vendor'
+	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
+		if request.form['action'] == 'add_item':
+			add_item(request.form['itemName'], request.form['itemDesc'], \
+			request.files['file'], STORE, request.form['itemPrice'])
+		elif request.form['action'] == 'del_item':
+			delete_item(request.form['itemName'], STORE)
 	return redirect(url_for('show_sample_vendor'))
 
 
 # View Functions - Store2 ######################################################
 @app.route('/store2')
 def show_store2():
-	items = query_db('select * from items where vendor = "store2"')
+	STORE = 'store2'
+	items = query_db('select * from items where vendor = ?', [STORE])
 	return render_template('store2.html', items = items)
 
 @app.route('/store2', methods = ['GET', 'POST'])
-def store2_add(): #store2_update
-	print("=== ", request.form['action'])
-	if request.method == 'POST':
-		print('here agina here again')
-		add_item(request.form['itemName'], request.form['itemDesc'], \
-			request.files['file'], 'store2')
-	else:
-		print('fuckidty')
+def store2_update(): 
+	STORE = 'store2'
+	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
+		if request.form['action'] == 'add_item':
+			add_item(request.form['itemName'], request.form['itemDesc'], \
+			request.files['file'], STORE, request.form['itemPrice'])
+		elif request.form['action'] == 'del_item':
+			delete_item(request.form['itemName'], STORE)
 	return redirect(url_for('show_store2'))
-
-# @app.route('/store2', methods = ['GET', 'POST'])
-# def store2_delete():
-# 	print("FUCKKKKKKK")
-# 	if request.method == 'POST':
-# 		print('boner')
 
 
 # View Functions - Logout ######################################################
