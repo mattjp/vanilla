@@ -42,18 +42,35 @@
     <div class="container">
       <h1>Upcoming Drops</h1>
       <div class="jumbotron">
-        <div class="col-sm-3 upcoming-drop-1">
-          <h3 class="drop-title">Flat Dog</h3>
-          <!-- <span id=timer1></span> -->
-          <div style="float: right;" id="timer1"></div>
-          <p>OUR LINK</p>
-          <p>THEIR LINK</p>
-        </div>
-        <div class="col-sm-3 upcoming-drop-2">
-        </div>
-        <div class="col-sm-3 upcoming-drop-3">
-        </div>
-        <div class="col-sm-3 upcoming-drop-4">
+        <div class="row-fluid">
+
+          <div class="col-sm-3 padding-sm">
+            <div class="upcoming-drop">
+              <h3 class="drop-title">Flat Dog Emporium</h3>
+              <h4 id="timer1"></h4>
+            </div>
+          </div>
+
+          <div class="col-sm-3 padding-sm">
+            <div class="upcoming-drop">
+              <h3 class="drop-title">Represent Clo.</h3>
+              <h4 id="timer2"></h4>
+            </div>
+          </div>
+
+          <div class="col-sm-3 padding-sm">
+            <div class="upcoming-drop">
+              <h3 class="drop-title">Steady Hands Apparel</h3>
+              <h4 id="timer3"></h4>
+            </div>
+          </div>
+
+          <div class="col-sm-3 padding-sm">
+            <div class="upcoming-drop">
+              <h3 class="drop-title">Anti Social Social Club</h3>
+              <h4 id="timer4"></h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -69,12 +86,19 @@
       </div>
     </div>
 
-
+    <div class="container">
+      <h1>All Brands</h1>
+      <div class="jumbotron">
+        {% for item in items %}
+        <p>{{ item['vendorName'] }}</p>
+        {% endfor %}
+      </div>  
+    </div>
     
 
-    <h3><a href="{{ url_for('show_sample_vendor') }}">sample vendor</a></h3>
+    <!-- <h3><a href="{{ url_for('show_sample_vendor') }}">sample vendor</a></h3> -->
 
-    <h3><a href="{{ url_for('show_store2') }}">store2</a></h3>
+    <!-- <h3><a href="{{ url_for('show_store2') }}">store2</a></h3> -->
     
 
     <!-- {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %} -->
@@ -156,6 +180,15 @@ var x = setInterval(function() {
 
   // Display the result in the element with id="demo"
   document.getElementById("timer1").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  document.getElementById("timer2").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  document.getElementById("timer3").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  document.getElementById("timer4").innerHTML = days + "d " + hours + "h "
   + minutes + "m " + seconds + "s ";
 
   // If the count down is finished, write some text 

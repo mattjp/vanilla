@@ -85,12 +85,14 @@ def update_db(query, args = ()):
 # Command Line Functions #######################################################
 @app.cli.command('insert-vendor')
 def insert_vendor_command():
-	v_name = input('Vendor Name: ')
+	v_name = input('Vendor Name (shortened, no spaces): ')
+	v_full_name = input('Vendor Name (Full)')
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
 	v_em = input('Vendor Email: ' )
-	insert('vendors', ['vendorName', 'password', 'email'], [v_name, v_pw, v_em])
+	insert('vendors', ['vendorName', 'displayName', 'password', 'email'], \
+		[v_name, v_full_name, v_pw, v_em])
 	os.mkdir('static/' + v_name)
-	print('Added', v_name, 'to vendors.')
+	print('Added', v_full_name, 'to vendors.')
 
 @app.cli.command('initdb')
 def initdb_command():
@@ -111,7 +113,8 @@ def complete_login(id, cur_type):
 # View Functions - Home ########################################################
 @app.route('/')
 def show_home():
-	return render_template('home.html')
+	items = query_db('select * from vendors')
+	return render_template('home.html', items = items)
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
@@ -163,7 +166,9 @@ def login():
 		else:
 			update_db('update vendors set password = ? where vendorName = ?', \
 				[new_pw, user_id])
-	return render_template('home.html', error = error)
+
+	items = query_db('select * from vendors')
+	return render_template('home.html', error = error, items = items)
 
 # Add item to vendor page
 def add_item(item_name, item_desc, item_img, vendor, item_price):

@@ -7,6 +7,7 @@ create table if not exists users (
 create table if not exists vendors (
 	vid integer primary key autoincrement,
 	vendorName text not null,
+	displayName text not null,
 	password text not null,
 	email text not null
 );

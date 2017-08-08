@@ -125,22 +125,34 @@ body {
 }
 
 /* Upcoming drops *************************************************************/
-.upcoming-drop-1 {
+.padding-sm {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.upcoming-drop {
 	border: 1px solid #798486;
+	text-align: right;
+	font-family: 'Open Sans', sans-serif;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-right: 8px;
+	transition-duration: 0.3s;
 }
 
-.upcoming-drop-2 {
-	background-color: yellow;
+.upcoming-drop h4 {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 100;
 }
 
-.upcoming-drop-3 {
-	background-color: blue;
+.upcoming-drop:hover {
+	background-color: #dde2e3;
+	border-color: #000;
 }
 
-.upcoming-drop-4 {
-	background-color: green;
+.upcoming-drop:focus {
+	outline: none;
 }
-
 
 .drop-title h3 {
 	display: inline-block;
