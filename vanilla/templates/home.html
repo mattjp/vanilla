@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>vanilla</title>
+    <title>H.I.H.Co.</title>
 
     <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
@@ -21,10 +21,15 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <ul class="nav navbar-nav">
+          {% if not session.logged_in %}
           <li>
-            <!-- <button class="btn btn-default navbar-btn" onclick="document.getElementById('login_btn').style.display='block'">Login \ Sign Up</button> -->
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#login_btn">Login \ Sign up</button>
           </li>
+          {% else %}
+          <li>
+            <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('logout') }}'" type="button">Logout</button>
+          </li>
+          {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
@@ -34,11 +39,45 @@
       </div>
     </nav>
 
-    {% if not session.logged_in %}
+    <div class="container">
+      <h1>Upcoming Drops</h1>
+      <div class="jumbotron">
+        <div class="col-sm-3 upcoming-drop-1">
+          <h3 class="drop-title">Flat Dog</h3>
+          <!-- <span id=timer1></span> -->
+          <div style="float: right;" id="timer1"></div>
+          <p>OUR LINK</p>
+          <p>THEIR LINK</p>
+        </div>
+        <div class="col-sm-3 upcoming-drop-2">
+        </div>
+        <div class="col-sm-3 upcoming-drop-3">
+        </div>
+        <div class="col-sm-3 upcoming-drop-4">
+        </div>
+      </div>
+    </div>
 
-    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <div class="container">
+      <h1>Featured Items</h1>
+      <div class="jumbotron">
+        <div class="featured-pic">
+          <img src="../static/homepage/home1.jpg">
+          <img src="../static/homepage/home2.jpg">
+          <img src="../static/homepage/home3.jpg">
+        </div>
+      </div>
+    </div>
+
 
     
+
+    <h3><a href="{{ url_for('show_sample_vendor') }}">sample vendor</a></h3>
+
+    <h3><a href="{{ url_for('show_store2') }}">store2</a></h3>
+    
+
+    <!-- {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %} -->
 
     <div id="login_btn" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -50,19 +89,24 @@
           </div>
           <div class="modal-body">
             <form action="{{ url_for('show_home') }}" method="POST">
-              <input type="text" name="email" placeholder="email"required>
-              <input type="password" name="password" placeholder="password" required>
-              <input type="submit" name="action" value="login">
-              <input type="submit" name="action" value="signup">
+              <div class="fields-wrapper">
+                <div class="fields">
+                  <input type="text" name="email" placeholder="email" required class="right-just">
+                  <input type="password" name="password" placeholder="password" required>
+                </div>
+              </div>
+              <div class="submit-wrapper">
+                <div class="btn">
+                  <button type="submit" name="action" value="login">Login</button>
+                  <button type="submit" name="action" value="signup">Sign up</button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
 
-
-    <!-- show logout button if current visitor is logged in -->
-    {% else %}
+<!--     {% if session.logged_in %}
     <p>hello {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
 
     <button onclick="document.getElementById('change_btn').style.display='block'" style="width:auto;">change your password, dungus</button>
@@ -71,14 +115,9 @@
       <input type="password" placeholder="New Password" name="new_password" required>
       <button type="submit" class="submit_btn" name="action" value="change">update</button>
     </div>
-
-    <h2><a href="{{ url_for('logout') }}">log out</a></h2>
-    {% endif %}
+    {% endif %} -->
 
 
-    <h3><a href="{{ url_for('show_sample_vendor') }}">sample vendor</a></h3>
-
-    <h3><a href="{{ url_for('show_store2') }}">store2</a></h3>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -96,4 +135,34 @@
       }
   }
   </script>
+  <script>
+// Set the date we're counting down to
+var countDownDate = new Date("Aug 10, 2017 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now an the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer1").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer1").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
 </html>

@@ -1,7 +1,9 @@
+/* Body ***********************************************************************/
 body {
-  padding-top: 60px;
-  background-color: #c4d0d9;
+  padding-top: 100px;
+  background-color: #d1d9dc;
 }
+
 
 /* Nav Bar ********************************************************************/
 .nav ul {
@@ -9,7 +11,7 @@ body {
 }
 
 .navbar-btn {
-	margin-top: 15px;
+	margin-top: 26px;
 	vertical-align: middle;
 	background-color: #676a6f;
 	font-family: 'Open Sans', sans-serif;
@@ -25,6 +27,14 @@ body {
 	background-color: #fff;
 }
 
+.navbar-btn:focus {
+	color: #fff;
+	background-color: #676a6f;
+	outline: none;
+	border-width: 1px;
+	border-color: #fff;
+}
+
 .navbar-right h1 {
 	margin-top: 10px;
 	margin-bottom: 15px;
@@ -32,6 +42,8 @@ body {
 	font-family: 'Roboto Slab', serif;
 	font-weight: 100;
 	color: #fff;
+	font-size: 400%;
+	letter-spacing: 4px;
 }
 
 .navbar-fixed-top {
@@ -45,15 +57,124 @@ body {
 	padding-bottom: 0px !important;
 }
 
-.navbar-fixed-top .container {
-	/*background-color: red;*/
+
+/* Modal **********************************************************************/
+.modal-header {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 100;
+	border-width: 0px;
+	border-radius: 0px;
+	padding-bottom: 0px;
+	text-align: center;
+	background-color: #dde2e3;
+	color: #43454C;
+}
+
+.modal-content {
+	font-family: 'Open Sans', sans-serif;
+	border-width: 0px;
+	border-radius: 0px;
+	background-color: #dde2e3;
+
+}
+
+.modal-body .fields-wrapper {
+	width: 100%;
+	text-align: center;
+}
+
+.modal-body .fields input {
+	width: 50%;
+	color: #43454C;
+	font-family: 'Open Sans', sans-serif;
+	background-color: #dde2e3;
+	padding: 6px 12px;
+    margin-bottom: 10px;
+	box-sizing: border-box;
+    border: 1px solid #798486;
+    transition: 0.5s;
+    outline: none;
+    text-align: center;
+}
+
+.modal-body .fields input:focus {
+    background-color: #c4d0d9;
+}
+
+.modal-body .submit-wrapper {
+	text-align: center;
+	margin-top: -6px;
+}
+
+.modal-body .btn button {
+	color: #43454C;
+	background-color: #dde2e3;
+	font-family: 'Open Sans', sans-serif;
+	box-sizing: border-box;
+	border: 1px solid #798486;
+	padding: 6px 18px;
+	transition-duration: 0.3s;
+}
+
+.modal-body .btn button:hover {
+	background-color: #c4d0d9;
+}
+
+.modal-body .btn button:focus {
+	outline: none;
+}
+
+/* Upcoming drops *************************************************************/
+.upcoming-drop-1 {
+	border: 1px solid #798486;
+}
+
+.upcoming-drop-2 {
+	background-color: yellow;
+}
+
+.upcoming-drop-3 {
+	background-color: blue;
+}
+
+.upcoming-drop-4 {
+	background-color: green;
 }
 
 
-/* Modal **********************************************************************/
+.drop-title h3 {
+	display: inline-block;
+}
+
+.drop-title span {
+	margin-left: 100px;
+}
 
 
+.container h1 {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 100;
+	text-align: right;
+	padding-right: 12px;
+}
 
+.container .jumbotron {
+	background-color: #d1d9dc;
+	border-radius: 0;
+	border-top: 1px solid #798486;
+	padding: 10px 10px;
+	width: 100%;
+}
+
+.container .jumbotron .featured-pic img {
+	width: 33%;
+	margin: 0;
+	transition-duration: 0.3s;
+}
+
+.container .jumbotron .featured-pic img:hover {
+	opacity: 0.5;
+}
 
 
 
