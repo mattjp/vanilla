@@ -12,9 +12,10 @@ body {
 
 .navbar-btn {
 	margin-top: 26px;
+	margin-right: 8px;
 	vertical-align: middle;
 	background-color: #676a6f;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	color: #fff;
 	border-radius: 0px;
 	border-width: 1px;
@@ -71,7 +72,7 @@ body {
 }
 
 .modal-content {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	border-width: 0px;
 	border-radius: 0px;
 	background-color: #dde2e3;
@@ -86,7 +87,7 @@ body {
 .modal-body .fields input {
 	width: 50%;
 	color: #43454C;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	background-color: #dde2e3;
 	padding: 6px 12px;
     margin-bottom: 10px;
@@ -109,7 +110,7 @@ body {
 .modal-body .btn button {
 	color: #43454C;
 	background-color: #dde2e3;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	box-sizing: border-box;
 	border: 1px solid #798486;
 	padding: 6px 18px;
@@ -127,7 +128,7 @@ body {
 /* Upcoming drops *************************************************************/
 .jumbotron p {
 	text-align: right;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	padding-right: 10px;
 	border-right: 1px solid #708486;
 }
@@ -140,7 +141,7 @@ body {
 .upcoming-drop {
 	border: 1px solid #798486;
 	text-align: right;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	padding-top: 0;
 	padding-bottom: 0;
 	padding-right: 8px;
@@ -148,8 +149,9 @@ body {
 }
 
 .upcoming-drop h4 {
-	font-family: 'Roboto Slab', serif;
+	font-family: 'Roboto', sans-serif;
 	font-weight: 100;
+	color: #605c64;
 }
 
 .upcoming-drop:hover {
@@ -193,6 +195,12 @@ body {
 
 .container .jumbotron .featured-pic img:hover {
 	opacity: 0.5;
+}
+
+/* Brands *********************************************************************/
+
+.vendor-name p > a {
+	color: #605c64;
 }
 
 

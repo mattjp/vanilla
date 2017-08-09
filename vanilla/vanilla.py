@@ -119,6 +119,7 @@ def show_home():
 @app.route('/', methods = ['GET', 'POST'])
 def login():
 	error = None
+	items = query_db('select * from vendors')
 	if request.method == 'POST' and request.form['action'] == 'login':
 		req_em = request.form['email']
 		req_pw = request.form['password']
@@ -127,13 +128,13 @@ def login():
 		if user:
 			if bcrypt.check_password_hash(user['password'], req_pw):
 				complete_login(req_em, 'user')
-				return render_template('home.html')
+				return render_template('home.html', items = items)
 			else:
 				error = 'Incorrect password for supplied email'
 		elif vendor:
 			if bcrypt.check_password_hash(vendor['password'], req_pw):
 				complete_login(vendor['vendorName'], 'vendor')
-				return render_template('home.html')
+				return render_template('home.html', items = items)
 			else:
 				error = 'wrong vendor password'
 		else:
@@ -152,7 +153,7 @@ def login():
 				enc_pw = bcrypt.generate_password_hash(req_pw)
 				insert('users', ['password', 'email'], [enc_pw, req_em])
 				complete_login(req_em, 'user')
-				return render_template('home.html')
+				return render_template('home.html', items = items)
 			else:
 				error = 'Email already exists in database'
 		else:
@@ -166,8 +167,6 @@ def login():
 		else:
 			update_db('update vendors set password = ? where vendorName = ?', \
 				[new_pw, user_id])
-
-	items = query_db('select * from vendors')
 	return render_template('home.html', error = error, items = items)
 
 # Add item to vendor page

@@ -12,7 +12,7 @@
     <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:100" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
 
 
   </head>
@@ -30,6 +30,9 @@
             <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('logout') }}'" type="button">Logout</button>
           </li>
           {% endif %}
+          <li>
+            <button class="btn btn-default navbar-btn" onclick="location.href='#contact'" type="button">Contact</button>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
@@ -76,7 +79,7 @@
     </div>
 
     <div class="container">
-      <h1>Featured Items</h1>
+      <h1>Featured Brands</h1>
       <div class="jumbotron">
         <div class="featured-pic">
           <img src="../static/homepage/home1.jpg">
@@ -91,13 +94,15 @@
       <div class="jumbotron">
         {% for item in items %}
         <div class="col-sm-3">
-          <p><a href="/{{ item['vendorName'] }}">{{ item['displayName'] }}</a></p>
+          <div class="vendor-name">
+            <p><a href="/{{ item['vendorName'] }}">{{ item['displayName'] }}</a></p>
+          </div>
         </div>
         {% endfor %}
       </div>  
     </div>
 
-    <div class="container">
+    <div class="container" id="contact">
       <h1>Get Your Shit on Our Site</h1>
       <div class="jumbotron">
         <p>chrisp@hihc.com</p>
@@ -155,56 +160,45 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../static/scripts/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
 
   <script>
-  // Get the modal
   var modal = document.getElementById('login_btn');
-
-  // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
       }
   }
   </script>
+
   <script>
-// Set the date we're counting down to
-var countDownDate = new Date("Aug 10, 2017 15:37:25").getTime();
+    var countDownDate = new Date("Aug 10, 2017 15:37:25").getTime();
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      document.getElementById("timer1").innerHTML = days + " \\ " + hours + " \\ "
+      + minutes + " \\ " + seconds;
+      document.getElementById("timer2").innerHTML = days + " \\ " + hours + " \\ "
+      + minutes + " \\ " + seconds;
+      document.getElementById("timer3").innerHTML = days + " \\ " + hours + " \\ "
+      + minutes + " \\ " + seconds;
+      document.getElementById("timer4").innerHTML = days + " \\ " + hours + " \\ "
+      + minutes + " \\ " + seconds;
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("timer1").innerHTML = "EXPIRED";
+      }
+    }, 1000);
+  </script>
 
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get todays date and time
-  var now = new Date().getTime();
-
-  // Find the distance between now an the count down date
-  var distance = countDownDate - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="demo"
-  document.getElementById("timer1").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  document.getElementById("timer2").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  document.getElementById("timer3").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  document.getElementById("timer4").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  // If the count down is finished, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("timer1").innerHTML = "EXPIRED";
-  }
-}, 1000);
-</script>
+  <script>
+    $('html, body').stop().animate({
+     'scrollTop': $target.offset().top
+}, 900, 'swing');
+  </script>
 </html>
