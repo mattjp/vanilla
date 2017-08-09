@@ -125,6 +125,13 @@ body {
 }
 
 /* Upcoming drops *************************************************************/
+.jumbotron p {
+	text-align: right;
+	font-family: 'Open Sans', sans-serif;
+	padding-right: 10px;
+	border-right: 1px solid #708486;
+}
+
 .padding-sm {
 	padding-left: 5px;
 	padding-right: 5px;

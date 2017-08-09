@@ -86,7 +86,7 @@ def update_db(query, args = ()):
 @app.cli.command('insert-vendor')
 def insert_vendor_command():
 	v_name = input('Vendor Name (shortened, no spaces): ')
-	v_full_name = input('Vendor Name (Full)')
+	v_full_name = input('Vendor Name (Full): ')
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
 	v_em = input('Vendor Email: ' )
 	insert('vendors', ['vendorName', 'displayName', 'password', 'email'], \
@@ -197,22 +197,22 @@ def delete_item(item_name, vendor):
 
 
 # View Functions - Sample ######################################################
-@app.route('/sample_vendor')
-def show_sample_vendor():
-	STORE = 'sample_vendor'
+@app.route('/represent_clo')
+def show_represent_clo():
+	STORE = 'represent_clo'
 	items = query_db('select * from items where vendor = ?', [STORE])
-	return render_template('sample_vendor.html', items = items)
+	return render_template('represent_clo.html', items = items)
 
-@app.route('/sample_vendor', methods = ['GET', 'POST'])
-def sample_vendor_update():
-	STORE = 'sample_vendor'
+@app.route('/represent_clo', methods = ['GET', 'POST'])
+def update_represent_clo():
+	STORE = 'represent_clo'
 	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
 		if request.form['action'] == 'add_item':
 			add_item(request.form['itemName'], request.form['itemDesc'], \
 			request.files['file'], STORE, request.form['itemPrice'])
 		elif request.form['action'] == 'del_item':
 			delete_item(request.form['itemName'], STORE)
-	return redirect(url_for('show_sample_vendor'))
+	return redirect(url_for('show_represent_clo'))
 
 
 # View Functions - Store2 ######################################################
@@ -242,7 +242,8 @@ def logout():
     return redirect(url_for('show_home'))
 
 
-
+if __name__ == '__main__':
+	app.run()
 
 
 
