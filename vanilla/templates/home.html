@@ -14,7 +14,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   </head>
 
   <body>
@@ -29,18 +29,33 @@
           <li>
             <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('logout') }}'" type="button">Logout</button>
           </li>
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#change_btn">Change Password</button>
+          </li>
           {% endif %}
           <li>
             <button class="btn btn-default navbar-btn" onclick="location.href='#contact'" type="button">Contact</button>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="{{ url_for('show_home') }}"><h1>Heavy Industries Holding Co.</h1></a>
-          </li>
+          <div class="page-title">
+            <li>
+              <a href="{{ url_for('show_home') }}"><h1>flat dog \ FLAT DOG</h1></a>
+            </li>
+          </div>
         </ul>
       </div>
     </nav>
+
+    {% if error %}
+    <div class="container">
+      <div class="col-sm-3">
+        <div class="error-msg">
+          <p>{{ error }}</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <div class="container">
       <h1>Upcoming Drops</h1>
@@ -50,6 +65,7 @@
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
               <h3 class="drop-title">Flat Dog Emporium</h3>
+              <h4>2017 \ 08 \ 12</h4>
               <h4 id="timer1"></h4>
             </div>
           </div>
@@ -57,6 +73,7 @@
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
               <h3 class="drop-title">Represent Clo.</h3>
+              <h4>2017 \ 08 \ 12</h4>
               <h4 id="timer2"></h4>
             </div>
           </div>
@@ -64,6 +81,7 @@
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
               <h3 class="drop-title">Steady Hands Apparel</h3>
+              <h4>2017 \ 08 \ 12</h4>
               <h4 id="timer3"></h4>
             </div>
           </div>
@@ -71,6 +89,7 @@
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
               <h3 class="drop-title">Anti Social Social Club</h3>
+              <h4>2017 \ 08 \ 12</h4>
               <h4 id="timer4"></h4>
             </div>
           </div>
@@ -105,17 +124,13 @@
     <div class="container" id="contact">
       <h1>Get Your Shit on Our Site</h1>
       <div class="jumbotron">
-        <p>chrisp@hihc.com</p>
-        <p>mattt@hihc.com</p>
+        <div class="contact-info">
+          <h3><i class="fa fa-envelope-o" aria-hidden="true"></i> chrisp@vanillaclo.com \ <i class="fa fa-instagram" aria-hidden="true"></i>
+ @bigdumbchrisp</h3>
+          <h3><i class="fa fa-envelope-o" aria-hidden="true"></i> mattt@FLATDOG.com \<a href="https://github.com/mattjp"><i class="fa fa-github" aria-hidden="true"></i> @mattjp</a></h3>
+        </div>
       </div>
     </div>
-    
-
-
-    <!-- <h3><a href="{{ url_for('show_store2') }}">store2</a></h3> -->
-    
-
-    <!-- {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %} -->
 
     <div id="login_btn" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -123,7 +138,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Login (or) Sign up (or) Don't, I don't care</h3>
+            <h3>Login (or) Sign up (or) Don't</h3>
           </div>
           <div class="modal-body">
             <form action="{{ url_for('show_home') }}" method="POST">
@@ -143,17 +158,35 @@
           </div>
         </div>
       </div>
-
-<!--     {% if session.logged_in %}
-    <p>hello {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
-
-    <button onclick="document.getElementById('change_btn').style.display='block'" style="width:auto;">change your password, dungus</button>
-    <div id="change_btn" class="modal">
-    <form action="{{ url_for('show_home') }}" method="POST">
-      <input type="password" placeholder="New Password" name="new_password" required>
-      <button type="submit" class="submit_btn" name="action" value="change">update</button>
     </div>
-    {% endif %} -->
+
+    <div id="change_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>Change Your Password</h3>
+          </div>
+          <div class="modal-body">
+            <form action="{{ url_for('show_home') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">
+                  <input type="password" placeholder="New Password" name="new_password" required>
+                </div>
+              </div>
+              <div class="submit-wrapper">
+                <div class="btn">
+                  <button type="submit" class="submit_btn" name="action" value="change">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
 
@@ -173,7 +206,7 @@
   </script>
 
   <script>
-    var countDownDate = new Date("Aug 10, 2017 15:37:25").getTime();
+    var countDownDate = new Date("Aug 12, 2017 21:00:00").getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var distance = countDownDate - now;

@@ -1,7 +1,7 @@
 /* Body ***********************************************************************/
 body {
   padding-top: 100px;
-  background-color: #d1d9dc;
+  background-color: #fff;
 }
 
 
@@ -14,7 +14,7 @@ body {
 	margin-top: 26px;
 	margin-right: 8px;
 	vertical-align: middle;
-	background-color: #676a6f;
+	background-color: #554853;
 	font-family: 'Roboto', sans-serif;
 	color: #fff;
 	border-radius: 0px;
@@ -24,19 +24,20 @@ body {
 }
 
 .navbar-btn:hover {
-	color: #676a6f;
+	color: #554853;
 	background-color: #fff;
+	border: 1px solid #fff;
 }
 
 .navbar-btn:focus {
 	color: #fff;
-	background-color: #676a6f;
+	background-color: #554853;
 	outline: none;
 	border-width: 1px;
 	border-color: #fff;
 }
 
-.navbar-right h1 {
+.navbar-right .page-title h1 {
 	margin-top: 10px;
 	margin-bottom: 15px;
 	vertical-align: middle;
@@ -47,15 +48,26 @@ body {
 	letter-spacing: 4px;
 }
 
+.navbar-right .page-title a:hover {
+	text-decoration: none;
+}
+
 .navbar-fixed-top {
-	background-color: #676a6f;
-	opacity: 0.6;
+	background-color: #554853;
+	opacity: 0.8;
 	border-width: 0px;
 }
 
 .navbar-nav > li > a {
 	padding-top: 0px !important;
 	padding-bottom: 0px !important;
+}
+
+/* Error Message **************************************************************/
+.error-msg p {
+	font-family: 'Roboto', sans-serif;
+	color: #798486;
+	margin-left: -15px;
 }
 
 
@@ -131,6 +143,11 @@ body {
 	font-family: 'Roboto', sans-serif;
 	padding-right: 10px;
 	border-right: 1px solid #708486;
+	transition-duration: 0.3s;
+}
+
+.jumbotron p:hover {
+	border-right: 1px solid #251c1c;
 }
 
 .padding-sm {
@@ -151,12 +168,12 @@ body {
 .upcoming-drop h4 {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 100;
-	color: #605c64;
+	color: #251c1c;
 }
 
 .upcoming-drop:hover {
-	background-color: #dde2e3;
-	border-color: #000;
+	background-color: #a29a9d;
+	border-color: #251c1c;
 }
 
 .upcoming-drop:focus {
@@ -171,7 +188,6 @@ body {
 	margin-left: 100px;
 }
 
-
 .container h1 {
 	font-family: 'Roboto Slab', serif;
 	font-weight: 100;
@@ -180,7 +196,7 @@ body {
 }
 
 .container .jumbotron {
-	background-color: #d1d9dc;
+	background-color: #fff;
 	border-radius: 0;
 	border-top: 1px solid #798486;
 	padding: 10px 10px;
@@ -197,12 +213,43 @@ body {
 	opacity: 0.5;
 }
 
-/* Brands *********************************************************************/
-
-.vendor-name p > a {
+.contact-info h3 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
 	color: #605c64;
+	text-align: right;
+	border-right: 1px solid #798486;
+	padding: 5px;
+	transition-duration: 0.3s;
 }
 
+.contact-info a {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	color: #605c64;
+	text-align: right;
+	transition-duration: 0.3s;
+}
+
+.contact-info a:hover {
+	text-decoration: none;
+	color: #251c1c;
+}
+
+/* Brands *********************************************************************/
+.vendor-name p > a {
+	color: #605c64;
+	transition-duration: 0.3s;
+}
+
+.vendor-name p:hover {
+	background-color: #a29a9d;
+}
+
+.jumbotron p:hover a {
+	color: #251c1c;
+	text-decoration: none;
+}
 
 
 
