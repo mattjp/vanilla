@@ -1,6 +1,6 @@
 /* Body ***********************************************************************/
 body {
-  padding-top: 100px;
+  /*padding-top: 100px;*/
   background-color: #fff;
 }
 
@@ -52,9 +52,9 @@ body {
 	text-decoration: none;
 }
 
-.navbar-fixed-top {
+.navbar-static-top {
 	background-color: #554853;
-	opacity: 0.8;
+	/*opacity: 0.8;*/
 	border-width: 0px;
 }
 
