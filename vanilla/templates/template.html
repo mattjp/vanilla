@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>warehouse</title>
+    <title>verdeckt</title>
 
     <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
@@ -71,89 +71,6 @@
       </div>
     </div>
     {% endif %}
-
-    <div class="container">
-      <h1>drops</h1>
-      <div class="jumbotron">
-        <div class="row-fluid">
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <h3 class="drop-title">Flat Dog Emporium</h3>
-              <h4>2017 \ 08 \ 12</h4>
-              <h4 id="timer1"></h4>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <a href="{{ url_for('show_represent_clo') }}">
-              <h3 class="drop-title">Represent Clo.</h3>
-              <h4>2017 \ 08 \ 12</h4>
-              <h4 id="timer2"></h4>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <h3 class="drop-title">Steady Hands Apparel</h3>
-              <h4>2017 \ 08 \ 12</h4>
-              <h4 id="timer3"></h4>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <h3 class="drop-title">Anti Social Social Club</h3>
-              <h4>2017 \ 08 \ 12</h4>
-              <h4 id="timer4"></h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <h1>featured</h1>
-      <div class="jumbotron">
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/assc.png">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/marblesoda.gif">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/repclo.jpeg">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/resurgence.gif">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/777.jpg">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/bomb.png">
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="container">
       <div class="goodbye">
@@ -243,43 +160,4 @@
     <script src="../static/scripts/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
-
-  <script>
-  var modal = document.getElementById('login_btn');
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
-  </script>
-
-  <script>
-    var countDownDate = new Date("Aug 12, 2017 21:00:00").getTime();
-    var x = setInterval(function() {
-      var now = new Date().getTime();
-      var distance = countDownDate - now;
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById("timer1").innerHTML = days + " \\ " + hours + " \\ "
-      + minutes + " \\ " + seconds;
-      document.getElementById("timer2").innerHTML = days + " \\ " + hours + " \\ "
-      + minutes + " \\ " + seconds;
-      document.getElementById("timer3").innerHTML = days + " \\ " + hours + " \\ "
-      + minutes + " \\ " + seconds;
-      document.getElementById("timer4").innerHTML = days + " \\ " + hours + " \\ "
-      + minutes + " \\ " + seconds;
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("timer1").innerHTML = "EXPIRED";
-      }
-    }, 1000);
-  </script>
-
-  <script>
-    $('html, body').stop().animate({
-     'scrollTop': $target.offset().top
-}, 900, 'swing');
-  </script>
 </html>
