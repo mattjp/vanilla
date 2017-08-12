@@ -286,6 +286,57 @@ body {
 	border-right: 1px solid #554853;
 }
 
+.brand-overview p {
+	color: #554853;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	font-size: 120%;
+	margin-bottom: -30px;
+}
+
+.row {
+	display: flex;
+  	display: -webkit-flex;
+  	flex-wrap: wrap;
+}
+
+.col-sm-4 {
+	float: right !important;
+}
+
+.vendor-item img {
+	width: 100%;
+}
+
+.item-title {
+	border-right: 1px solid #554853;
+}
+
+.item-title p {
+	color: #554853;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	font-size: 160%;
+}
+
+.item-description {
+	margin-top: 10px;
+	border-right: 1px solid #554853;
+	margin-bottom: 10%;
+}
+
+.item-description p {
+	color: #554853;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	font-size: 120%;
+}
+
+.item-delete-btn {
+	text-align: right;
+	margin-bottom: 10px;
+}
+
 
 /* Footer *********************************************************************/
 .goodbye {
