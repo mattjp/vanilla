@@ -7,46 +7,208 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>sample vendor</title>
+    <title>verdeckt</title>
 
-    <link href="../static/styles/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/styles/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
   </head>
 
-  <body align="center">
-    <h1>Represent Clo.</h1>
-
-    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-
-    {% if session.logged_in %}
-    <p> {{ current_user.id[0] }} {{ current_user.id[1] }}</p>
-
-    {% if current_user.id[0] == 'sample_vendor' %}
-    <button onclick="document.getElementById('add_btn').style.display='block'" style="width:auto;">Add New Item</button>
-    <div id="add_btn" class="modal">
-      <form action="{{ url_for('update_represent_clo') }}" method="POST" enctype="multipart/form-data">
-        <div class="container">
-          <input type="hidden" name="action" value="add_item"> 
-          <input type="text" placeholder="Name" name="itemName" required>
-          <input type="text" placeholder="Item description" name="itemDesc" required>
-          <input type="text" placeholder="Price (optional)" name="itemPrice">
-          <input type="file" name="file" accept="image/*" required>
-          <div class="clearfix">
-            <button type="button" onclick="document.getElementById('add_btn').style.display='none'" class="cancel_btn">Cancel</button>
-            <button type="submit" class="submit_btn" value="Upload">Add Item</button>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          {% if not session.logged_in %}
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#login_btn">login \ sign up</button>
+          </li>
+          {% else %}
+          <li>
+            <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('logout') }}'" type="button">logout</button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#change_btn">change password</button>
+          </li>
+          {% endif %}
+          <li>
+            <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('show_all_brands') }}'" type="button">brands</button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" type="button">blog</button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <div class="page-title">
+            <li>
+              <a href="{{ url_for('show_home') }}"><h1>verdeckt</h1></a>
+            </li>
           </div>
+        </ul>
+      </div>
+    </nav>
+
+    {% if error %}
+    <div class="container">
+      <div class="col-sm-3">
+        <div class="error-msg">
+          <p>{{ error }}</p>
         </div>
-      </form>
+      </div>
     </div>
     {% endif %}
 
-    {% else %}
-    <p> log in before you get fucking flattened </p>
+    <div class="container">
+      <h1>Represent Clo</h1>
+        <div class="jumbotron">
+
+        </div>  
+    </div>
+
+    <div class="container">
+      <div class="goodbye">
+        <a href="https://github.com/mattjp/vanilla"><p>made by humans <i class="fa fa-github" aria-hidden="true"></i></p></a>
+      </div>
+    </div>
+
+    <div id="login_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>sign up and\or login</h3>
+          </div>
+          <div class="modal-body">
+            <form action="{{ url_for('show_represent_clo') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">
+                  <input type="text" name="email" placeholder="email" required class="right-just">
+                  <input type="password" name="password" placeholder="password" required>
+                </div>
+              </div>
+              <div class="submit-wrapper">
+                <div class="submit-btn">
+                  <button type="submit" name="action" value="login"><i class="fa fa-user" aria-hidden="true"></i></button>
+                  <button type="submit" name="action" value="signup"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="change_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>change your password</h3>
+          </div>
+          <div class="modal-body">
+            <form action="{{ url_for('show_represent_clo') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">
+                  <input type="password" placeholder="new password" name="new_password" required>
+                </div>
+              </div>
+              <div class="submit-wrapper">
+                <div class="submit-btn">
+                  <button type="submit" class="submit_btn" name="action" value="change"><i class="fa fa-key" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="email_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>email us</h3>
+          </div>
+          <div class="modal-body">
+            <form id="contact_form" action="{{ url_for('show_represent_clo') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">
+                  <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
+                  <textarea form="contact_form" name="email_content" cols="50" rows="5" placeholder="content"></textarea>
+                </div>
+              </div>
+              <div class="submit-wrapper">
+                <div class="submit-btn">
+                  <button type="submit" class="submit_btn" name="action" value="email"><i class="fa fa-comment" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if session.logged_in %}
+    {% if current_user.id[0] == 'represent_clo' %}
+    <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
+    <div id="add_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3>add an item</h3>
+        </div>
+        <div class="modal-body">
+          <form id="new_item_form" action="{{ url_for('update_represent_clo') }}" method="POST" enctype="multipart/form-data">
+            <div class="fields-wrapper">
+              <div class="fields">
+                <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>
+                <textarea form="new_item_form" name="itemDesc" cols="50" rows="5" placeholder="item description" required></textarea>
+                <div class="price-field">
+                  <input type="text" placeholder="price (optional)" name="itemPrice">
+                </div>
+                <div class="file-field">
+                  <input type="file" name="file" accept="image/*" required>
+                </div>
+                <input type="hidden" name="action" value="add_item">
+              </div>
+            </div>
+            <div class="submit-wrapper">
+              <div class="submit-btn">
+                <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </form>
+<!--           <form action="{{ url_for('update_represent_clo') }}" method="POST" enctype="multipart/form-data">
+          <div class="fields-wrapper">
+            <div class="fields">
+              <input type="hidden" name="action" value="add_item"> 
+              <input type="text" placeholder="Name" name="itemName" required>
+              <input type="text" placeholder="Item description" name="itemDesc" required>
+              <input type="text" placeholder="Price (optional)" name="itemPrice">
+              <input type="file" name="file" accept="image/*" required>
+            </div>
+          </div>
+          <div class="submit-wrapper">
+            <div class="submit-btn">
+              <button type="submit" class="submit_btn" value="upload_item">add item</button>
+            </div>
+          </div>
+          </form> -->
+        </div>
+      </div>
+    </div>
     {% endif %}
-
-
-
-    <h3><a href="{{ url_for('show_home') }}">back to safety</a></h3>
+    {% endif %}
 
     <table align="center">
     {% for item in items %}
@@ -68,15 +230,7 @@
     </table>
   </body>
 
-  <script>
-  // Get the modal
-  var modal = document.getElementById('add_btn');
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../static/scripts/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </html>

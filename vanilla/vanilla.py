@@ -241,6 +241,7 @@ def login():
 @app.route('/brands')
 def show_all_brands():
 	items = find_all_vendors()
+	print(items)
 	return render_template('brands.html', items = items)
 
 @app.route('/brands', methods = ['GET', 'POST'])
@@ -294,6 +295,7 @@ def logout():
     session.pop('logged_in', None)
     flask_login.logout_user()
     return redirect(url_for('show_home'))
+
 
 # Run Function #################################################################
 if __name__ == '__main__':

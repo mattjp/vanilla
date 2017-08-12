@@ -9,12 +9,11 @@
 
     <title>warehouse</title>
 
-    <link rel = "stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   </head>
 
   <body>
@@ -44,12 +43,6 @@
           </li>
           <li>
             <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
-          </li>
-          <li>
-            <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-reddit-alien" aria-hidden="true"></i></button>
-          </li>
-          <li>
-            <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-twitter" aria-hidden="true"></i></button>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -193,18 +186,18 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Change Your Password</h3>
+            <h3>change your password</h3>
           </div>
           <div class="modal-body">
             <form action="{{ url_for('show_home') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
-                  <input type="password" placeholder="New Password" name="new_password" required>
+                  <input type="password" placeholder="new password" name="new_password" required>
                 </div>
               </div>
               <div class="submit-wrapper">
-                <div class="btn">
-                  <button type="submit" class="submit_btn" name="action" value="change">Update</button>
+                <div class="submit-btn">
+                  <button type="submit" class="submit_btn" name="action" value="change"><i class="fa fa-key" aria-hidden="true"></i></button>
                 </div>
               </div>
             </form>
@@ -238,20 +231,19 @@
         </div>
       </div>
     </div>    
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../static/scripts/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../static/scripts/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <script>
+<!--   <script>
   var modal = document.getElementById('login_btn');
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
       }
   }
-  </script>
+  </script> -->
 
   <script>
     var countDownDate = new Date("Aug 12, 2017 21:00:00").getTime();
@@ -275,11 +267,5 @@
         document.getElementById("timer1").innerHTML = "EXPIRED";
       }
     }, 1000);
-  </script>
-
-  <script>
-    $('html, body').stop().animate({
-     'scrollTop': $target.offset().top
-}, 900, 'swing');
   </script>
 </html>
