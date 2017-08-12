@@ -223,6 +223,10 @@ body {
 	font-size: 225%;
 }
 
+h1 small {
+	color: #554853;
+}
+
 .container .jumbotron {
 	background-color: #fff;
 	border-radius: 0;
