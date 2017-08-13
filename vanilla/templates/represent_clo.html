@@ -86,9 +86,15 @@
         <div class="row">
         {% for item in items %}
         <div class="col-sm-4 vendor-item">
+          {% if item['price'] %}
+          <div class="item-title">
+            <p>{{ item['itemName'] }} \ ${{ item['price'] }}</p>
+          </div>
+          {% else %}
           <div class="item-title">
             <p>{{ item['itemName'] }}</p>
           </div>
+          {% endif %}
           <img src="{{ item['pathToImg'] }}">
           <div class="item-description">
             <p>{{ item['description'] }}</p>
