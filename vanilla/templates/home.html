@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>warehouse</title>
+    <title>verdeckt</title>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
@@ -34,9 +34,6 @@
           {% endif %}
           <li>
             <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('show_all_brands') }}'" type="button">brands</button>
-          </li>
-          <li>
-            <button class="btn btn-default navbar-btn" type="button">blog</button>
           </li>
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
@@ -235,15 +232,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="../static/scripts/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!--   <script>
-  var modal = document.getElementById('login_btn');
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
-  </script> -->
 
   <script>
     var countDownDate = new Date("Aug 12, 2017 21:00:00").getTime();

@@ -313,6 +313,7 @@ h1 small {
 }
 
 .item-title {
+	color: #554853;
 	border-right: 1px solid #554853;
 }
 
@@ -336,9 +337,33 @@ h1 small {
 	font-size: 120%;
 }
 
+.item-price {
+	color: #d6d0d0;
+}
+
 .item-delete-btn {
 	text-align: right;
 	margin-bottom: 10px;
+	margin-top: -25px;
+}
+
+.item-delete-btn button {
+	color: #554853;
+	background-color: #fff;
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+	border: 1px solid #554853;
+	padding: 5px 15px;
+	transition-duration: 0.3s;
+}
+
+.item-delete-btn button:hover {
+	color: #fff;
+	background-color: #554853;
+}
+
+.item-delete-btn button:focus {
+	outline: none;
 }
 
 

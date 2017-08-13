@@ -36,9 +36,6 @@
             <button class="btn btn-default navbar-btn" onclick="location.href='{{ url_for('show_all_brands') }}'" type="button">brands</button>
           </li>
           <li>
-            <button class="btn btn-default navbar-btn" type="button">blog</button>
-          </li>
-          <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
           <li>
@@ -88,7 +85,7 @@
         <div class="col-sm-4 vendor-item">
           {% if item['price'] %}
           <div class="item-title">
-            <p>{{ item['itemName'] }} \ ${{ item['price'] }}</p>
+            <p>{{ item['itemName'] }} \ <span class="item-price">${{ item['price'] }}</span></p>
           </div>
           {% else %}
           <div class="item-title">
@@ -104,7 +101,7 @@
             <form action="{{ url_for('update_represent_clo') }}" method="POST">
               <input type="hidden" name="action" value="del_item"> 
               <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
-              <button type="submit" value="delete">delete Item</button>
+              <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </form>
           </div>
           {% endif %}
@@ -113,27 +110,6 @@
       </div>
     </div>
     </div>
-
-<!--               <table align="center">
-    {% for item in items %}
-      <tr>
-        <td><p> {{ item['itemName'] }} </p></td>
-        <td><p> {{ item['description'] }} </p></td>
-        <td><p> {{ item['vendor'] }} </p></td>
-        <td><p> {{ item['price'] }}</p></td>
-        <td><img src="{{ item['pathToImg'] }}" height="200px" width="200px"></td>
-        {% if session.logged_in and current_user.id[0] == 'represent_clo' %}
-        <td><form action="{{ url_for('update_represent_clo') }}" method="POST">
-          <input type="hidden" name="action" value="del_item"> 
-          <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
-          <button type="submit" value="delete">delete Item</button>
-        </form></td>
-        {% endif %}
-      </tr>
-    {% endfor %}
-    </table> -->
-        <!-- </div>   -->
-    <!-- </div> -->
 
     <div class="container">
       <div class="goodbye">

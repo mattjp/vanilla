@@ -3,7 +3,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
-# from flask_emails import Message
 from werkzeug.utils import secure_filename
 from collections import defaultdict, OrderedDict
 
@@ -135,10 +134,10 @@ def delete_item(item_name, vendor):
 def add_item(item_name, item_desc, item_img, vendor, item_price):
 	exists = query_db('select * from items where itemName = ?', [item_name])
 	# TODO this only kind of work
-	if exists:
-		print('CANNOT HAVE ITEMS WITH THE SAME NAME')
-		site = vendor + '.html'
-		return render_template(site, error = 'cannot have item with same name')
+	# if exists:
+	# 	print('CANNOT HAVE ITEMS WITH THE SAME NAME')
+	# 	site = vendor + '.html'
+	# 	return render_template(site, error = 'cannot have item with same name')
 	folder = 'static/' + vendor + '/'
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
