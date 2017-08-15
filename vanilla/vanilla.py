@@ -93,16 +93,36 @@ def update_db(query, args = ()):
 
 
 # Command Line Functions #######################################################
-@app.cli.command('insert-vendor')
-def insert_vendor_command():
+# Creates vendor in table with no email or password
+@app.cli.command('create-vendor')
+def create_vendor_command():
 	v_name = input('Vendor Name (shortened, no spaces): ')
 	v_full_name = input('Vendor Name (Full): ')
-	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
-	v_em = input('Vendor Email: ' )
-	insert('vendors', ['vendorName', 'displayName', 'password', 'email'], \
-		[v_name, v_full_name, v_pw, v_em])
+	insert('vendors', ['vendorName', 'displayName'], [v_name, v_full_name])
 	os.mkdir('static/' + v_name)
 	print('Added', v_full_name, 'to vendors.')
+
+# Creates vendor in the table with all columns filled out
+@app.cli.command('create-vendor-full')
+def create_vendor_full_command():
+	v_name = input('Vendor Name (shortened, no spaces): ')
+	v_full_name = input('Vendor Name (Full): ')
+	v_em = input('Vendor Email: ' )
+	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
+	insert('vendors', ['vendorName', 'displayName', 'email', 'password'], \
+		[v_name, v_full_name, v_em, v_pw])
+	os.mkdir('static/' + v_name)
+	print('Added', v_full_name, 'to vendors.')
+
+# Adds email and password to the specified vendor
+@app.cli.command('update-vendor-details')
+def update_vendor_details_command():
+	v_name = input('Vendor Name (shortened, no spaces): ')
+	v_em = input('Vendor Email: ' )
+	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
+	update_db('update vendors set email = ? and password = ? where vendorName = ?', \
+		[v_em, v_pw, v_name])
+	print('Added email and password to', v_name)
 
 @app.cli.command('initdb')
 def initdb_command():

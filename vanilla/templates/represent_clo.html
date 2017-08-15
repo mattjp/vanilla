@@ -41,9 +41,9 @@
           <li>
             <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
           </li>
-          {% if session.logged_in and current_user.id[0] == 'represent_clo' %}
+          {% if session.logged_in and (current_user.id[0] == 'represent_clo' or current_user.id[0] == 'admin') %}
           <li>
-            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus-square-o" aria-hidden="true"></i></button>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
           </li>
           {% endif %}
         </ul>
@@ -68,8 +68,7 @@
     {% endif %}
 
     <div class="container">
-      <h1><small><i class="fa fa-instagram" aria-hidden="true"></i>
-</small> \ represent clothing</h1>
+      <h1><a href="https://www.instagram.com/representclo/?hl=en"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="https://representclo.com">represent clothing</a></h1>
       <div class="jumbotron overview">
         <div class="brand-overview">
           <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"</p>
@@ -85,7 +84,7 @@
         <div class="col-sm-4 vendor-item">
           {% if item['price'] %}
           <div class="item-title">
-            <p>{{ item['itemName'] }} \ <span class="item-price">${{ item['price'] }}</span></p>
+            <p>{{ item['itemName'] }} \ <span class="item-price"><small>$</small>{{ item['price'] }}</span></p>
           </div>
           {% else %}
           <div class="item-title">
@@ -113,7 +112,7 @@
 
     <div class="container">
       <div class="goodbye">
-        <a href="https://github.com/mattjp/vanilla"><p>made by humans <i class="fa fa-github" aria-hidden="true"></i></p></a>
+        <a href="http://mattjp.co"><p>made by matt <i class="fa fa-code" aria-hidden="true"></i></p></a>
       </div>
     </div>
 

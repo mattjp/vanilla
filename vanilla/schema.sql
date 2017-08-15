@@ -8,15 +8,15 @@ create table if not exists vendors (
 	vid integer primary key autoincrement,
 	vendorName text not null,
 	displayName text not null,
-	password text not null,
-	email text not null
+	password text,
+	email text
 );
 
 create table if not exists items (
 	iid integer primary key autoincrement,
 	itemName text not null,
-	description text not null,
+	description text,
 	vendor text not null,
 	price text,
-	pathToImg text not null
+	pathToImg text
 );

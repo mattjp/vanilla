@@ -223,8 +223,31 @@ body {
 	font-size: 225%;
 }
 
+.container a {
+	transition-duration: 0.3s;
+	color: #554853;
+}
+
+.container a:hover {
+	text-decoration: none;
+	color: #d6d0d0;
+}
+
+a small {
+	transition-duration: 0.3s;
+}
+
+a small:hover {
+	text-decoration: none;
+	color: #d6d0d0;
+}
+
 h1 small {
 	color: #554853;
+}
+
+p small {
+	font-size: 60%;
 }
 
 .container .jumbotron {
