@@ -39,6 +39,7 @@ app.config.from_envvar('VANILLA_SETTINGS', silent = True)
 
 mail = Mail(app)
 
+ADMIN = 'verdeckt_admin'
 
 # Database Functions ###########################################################
 def connect_db():
@@ -120,10 +121,11 @@ def update_vendor_details_command():
 	v_name = input('Vendor Name (shortened, no spaces): ')
 	v_em = input('Vendor Email: ' )
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
-	update_db('update vendors set email = ? and password = ? where vendorName = ?', \
+	update_db('update vendors set email = ?, password = ? where vendorName = ?', \
 		[v_em, v_pw, v_name])
 	print('Added email and password to', v_name)
 
+# Creates Database tables if they don't exist
 @app.cli.command('initdb')
 def initdb_command():
     init_db()
@@ -168,7 +170,7 @@ def add_item(item_name, item_desc, item_img, vendor, item_price):
 
 # Query the vendors database, display all vendors alphabetically
 def find_all_vendors():
-	all_vendors = query_db('select * from vendors')
+	all_vendors = query_db("select * from vendors where vendorName != 'verdeckt_admin'")
 	vendor_list = defaultdict(list)
 	letters = []
 	for vendor in all_vendors:
@@ -217,7 +219,7 @@ def request_handler(request):
 		req_pw = request.form['password']
 		valid_form = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$'
 		valid_em = re.match(valid_form, req_em)
-		if valid_em == None:
+		if valid_em == None and req_em != ADMIN:
 			error = 'SIGN-IN: Not a valid email address'
 		elif req_pw:
 			user = query_db('select * from users where email = ?', [req_em], True)
