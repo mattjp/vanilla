@@ -271,7 +271,7 @@ def brands_request():
 	return redirect(url_for('show_all_brands')) # TODO: pass back the error somehow
 
 
-# View Functions - Sample ######################################################
+# View Functions - Represent Clothing ##########################################
 @app.route('/represent_clo')
 def show_represent_clo():
 	STORE = 'represent_clo'
@@ -282,7 +282,8 @@ def show_represent_clo():
 def update_represent_clo():
 	STORE = 'represent_clo'
 	error = request_handler(request)
-	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
+	if request.method == 'POST' and (flask_login.current_user.id[0] == STORE or \
+		flask_login.current_user.id[0] == ADMIN):
 		if request.form['action'] == 'add_item':
 			add_item(request.form['itemName'], request.form['itemDesc'], \
 			request.files['file'], STORE, request.form['itemPrice'])
@@ -291,23 +292,25 @@ def update_represent_clo():
 	return redirect(url_for('show_represent_clo'))
 
 
-# View Functions - Store2 ######################################################
-@app.route('/store2')
-def show_store2():
-	STORE = 'store2'
+# View Functions - Marble Soda #################################################
+@app.route('/marble_soda')
+def show_marble_soda():
+	STORE = 'marble_soda'
 	items = query_db('select * from items where vendor = ?', [STORE])
-	return render_template('store2.html', items = items)
+	return render_template('marble_soda.html', items = items)
 
-@app.route('/store2', methods = ['GET', 'POST'])
-def store2_update(): 
-	STORE = 'store2'
-	if request.method == 'POST' and flask_login.current_user.id[0] == STORE:
+@app.route('/marble_soda', methods = ['GET', 'POST'])
+def update_marble_soda(): 
+	STORE = 'marble_soda'
+	error = request_handler(request)
+	if request.method == 'POST' and (flask_login.current_user.id[0] == STORE or \
+		flask_login.current_user.id[0] == ADMIN):
 		if request.form['action'] == 'add_item':
 			add_item(request.form['itemName'], request.form['itemDesc'], \
 			request.files['file'], STORE, request.form['itemPrice'])
 		elif request.form['action'] == 'del_item':
 			delete_item(request.form['itemName'], STORE)
-	return redirect(url_for('show_store2'))
+	return redirect(url_for('show_marble_soda'))
 
 
 # View Functions - Logout ######################################################
