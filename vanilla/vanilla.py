@@ -25,8 +25,12 @@ bcrypt = Bcrypt(app)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+# DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db')
+
 app.config.update(dict(
-	DATABASE = os.path.join(app.root_path, 'vanilla.db'),
+	DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db'),
 	SECRET_KEY = 'development key', # TODO change me!
 	MAIL_SERVER = 'smtp.gmail.com',
 	MAIL_PORT = 587,
@@ -43,7 +47,8 @@ ADMIN = 'verdeckt_admin'
 
 # Database Functions ###########################################################
 def connect_db():
-	rv = sqlite3.connect(app.config['DATABASE'])
+	# rv = sqlite3.connect(app.config['DATABASE'])
+	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db')
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -147,8 +152,8 @@ def complete_login(id, cur_type):
 def delete_item(item_name, vendor):
 	path = query_db('select * from items where vendor = ? and itemName = ?', \
 		[vendor, item_name], True)['pathToImg'][3:]
-	print(path)
-	os.remove(path)
+	full_path = '/var/www/html/vanilla/' + path
+	os.remove(full_path)
 	delete_from_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
@@ -164,7 +169,9 @@ def add_item(item_name, item_desc, item_img, vendor, item_price):
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
-	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+	item_img.save('/var/www/html/vanilla/' + folder + fname)
+	# item_img.save('/var/www/html/vanilla/static/' + fname)
+	# item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
 		[item_name, item_desc, vendor, full_path, item_price])
 
@@ -323,5 +330,5 @@ def logout():
 
 # Run Function #################################################################
 if __name__ == '__main__':
-	app.run()
+	app.run(host='0.0.0.0')
 
