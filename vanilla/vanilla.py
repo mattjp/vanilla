@@ -26,29 +26,26 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
-
-# DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db')
+ADMIN = 'verdeckt_admin'
 
 app.config.update(dict(
 	DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db'),
-	SECRET_KEY = 'development key', # TODO change me!
-	# MAIL_SERVER = 'smtp.gmail.com',
+	SECRET_KEY = 'knuckle puck crew fuck you', 
 	MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com',
 	MAIL_PORT = 25,
 	MAIL_USE_TLS = True,
-    	MAIL_USERNAME = 'AKIAIRG2N35PPM6V52FA',
-    	MAIL_PASSWORD = 'AvKIR1CCbqDMDwRBIQId1jJKU57P6THRb4wvIpK24SlD'
+	MAIL_USERNAME = 'AKIAIRG2N35PPM6V52FA',
+	MAIL_PASSWORD = 'AvKIR1CCbqDMDwRBIQId1jJKU57P6THRb4wvIpK24SlD'
 ))
-app.config.from_envvar('VANILLA_SETTINGS', silent = True)
 
+app.config.from_envvar('VANILLA_SETTINGS', silent = True)
 mail = Mail(app)
 
-ADMIN = 'verdeckt_admin'
 
 # Database Functions ###########################################################
 def connect_db():
-	# rv = sqlite3.connect(app.config['DATABASE'])
-	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db')
+	rv = sqlite3.connect(app.config['DATABASE'])
+	# rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -152,28 +149,27 @@ def complete_login(id, cur_type):
 def delete_item(item_name, vendor):
 	path = query_db('select * from items where vendor = ? and itemName = ?', \
 		[vendor, item_name], True)['pathToImg'][3:]
-	full_path = '/var/www/html/vanilla/' + path
-	os.remove(full_path)
+	# full_path = '/var/www/html/vanilla/' + path # TODO: Server path
+	# os.remove(full_path) # TODO: Server version
+	os.remove(path)
 	delete_from_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
 # Add item to vendor page
 def add_item(item_name, item_desc, item_img, vendor, item_price):
-	exists = query_db('select * from items where itemName = ?', [item_name])
-	# TODO this only kind of work
-	# if exists:
-	# 	print('CANNOT HAVE ITEMS WITH THE SAME NAME')
-	# 	site = vendor + '.html'
-	# 	return render_template(site, error = 'cannot have item with same name')
+	exists = query_db('select * from items where itemName = ? and vendor = ?', \
+		[item_name, vendor])
+	if exists:
+		return 'Cannot have items with the same name'
 	folder = 'static/' + vendor + '/'
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
-	item_img.save('/var/www/html/vanilla/' + folder + fname)
-	# item_img.save('/var/www/html/vanilla/static/' + fname)
-	# item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+	# item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
+	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
 		[item_name, item_desc, vendor, full_path, item_price])
+	return None
 
 # Query the vendors database, display all vendors alphabetically
 def find_all_vendors():
@@ -252,7 +248,33 @@ def request_handler(request):
 	elif request.method == 'POST' and request.form['action'] == 'email':
 		send_email(request.form['email_subject'], request.form['email_content'])
 	return error
-		
+
+# Show a vendor page
+def show_vendor(vendor):
+	addr = vendor + '.html'
+	items = query_db('select * from items where vendor = ?', [vendor])
+	return render_template(addr, items = items)
+
+# Handle requests for a vendor page
+def vendor_request_handler(vendor, request):
+	addr = vendor + '.html'
+	redir = 'show_' + vendor
+	error = request_handler(request)
+	if error: 
+		items = query_db('select * from items where vendor = ?', [vendor])
+		return render_template(vendor, error = error, items = items)
+	elif request.method == 'POST' and (flask_login.current_user.id[0] == vendor or \
+		flask_login.current_user.id[0] == ADMIN):
+		if request.form['action'] == 'add_item':
+			error = add_item(request.form['itemName'], request.form['itemDesc'], \
+			request.files['file'], vendor, request.form['itemPrice'])
+			if error:
+				items = query_db('select * from items where vendor = ?', [vendor])
+				return render_template(addr, error = error, items = items)
+		elif request.form['action'] == 'del_item':
+			delete_item(request.form['itemName'], vendor)
+	return redirect(url_for(redir))
+
 
 # View Functions - Home ########################################################
 @app.route('/')
@@ -281,43 +303,21 @@ def brands_request():
 # View Functions - Represent Clothing ##########################################
 @app.route('/represent_clo')
 def show_represent_clo():
-	STORE = 'represent_clo'
-	items = query_db('select * from items where vendor = ?', [STORE])
-	return render_template('represent_clo.html', items = items)
+	return show_vendor('represent_clo')
 
 @app.route('/represent_clo', methods = ['GET', 'POST'])
 def update_represent_clo():
-	STORE = 'represent_clo'
-	error = request_handler(request)
-	if request.method == 'POST' and (flask_login.current_user.id[0] == STORE or \
-		flask_login.current_user.id[0] == ADMIN):
-		if request.form['action'] == 'add_item':
-			add_item(request.form['itemName'], request.form['itemDesc'], \
-			request.files['file'], STORE, request.form['itemPrice'])
-		elif request.form['action'] == 'del_item':
-			delete_item(request.form['itemName'], STORE)
-	return redirect(url_for('show_represent_clo'))
+	return vendor_request_handler('represent_clo', request)
 
 
 # View Functions - Marble Soda #################################################
 @app.route('/marble_soda')
 def show_marble_soda():
-	STORE = 'marble_soda'
-	items = query_db('select * from items where vendor = ?', [STORE])
-	return render_template('marble_soda.html', items = items)
+	return show_vendor('marble_soda')
 
 @app.route('/marble_soda', methods = ['GET', 'POST'])
 def update_marble_soda(): 
-	STORE = 'marble_soda'
-	error = request_handler(request)
-	if request.method == 'POST' and (flask_login.current_user.id[0] == STORE or \
-		flask_login.current_user.id[0] == ADMIN):
-		if request.form['action'] == 'add_item':
-			add_item(request.form['itemName'], request.form['itemDesc'], \
-			request.files['file'], STORE, request.form['itemPrice'])
-		elif request.form['action'] == 'del_item':
-			delete_item(request.form['itemName'], STORE)
-	return redirect(url_for('show_marble_soda'))
+	return vendor_request_handler('marble_soda', request)
 
 
 # View Functions - Logout ######################################################
@@ -330,5 +330,6 @@ def logout():
 
 # Run Function #################################################################
 if __name__ == '__main__':
-	app.run(host='0.0.0.0')
+	# app.run(host='0.0.0.0') # TODO: Server run
+	app.run()
 
