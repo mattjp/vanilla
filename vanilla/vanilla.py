@@ -44,8 +44,8 @@ mail = Mail(app)
 
 # Database Functions ###########################################################
 def connect_db():
-	rv = sqlite3.connect(app.config['DATABASE'])
-	# rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
+	# rv = sqlite3.connect(app.config['DATABASE'])
+	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -149,9 +149,9 @@ def complete_login(id, cur_type):
 def delete_item(item_name, vendor):
 	path = query_db('select * from items where vendor = ? and itemName = ?', \
 		[vendor, item_name], True)['pathToImg'][3:]
-	# full_path = '/var/www/html/vanilla/' + path # TODO: Server path
-	# os.remove(full_path) # TODO: Server version
-	os.remove(path)
+	full_path = '/var/www/html/vanilla/' + path # TODO: Server path
+	os.remove(full_path) # TODO: Server version
+	# os.remove(path)
 	delete_from_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
@@ -165,8 +165,8 @@ def add_item(item_name, item_desc, item_img, vendor, item_price):
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
-	# item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
-	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+	item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
+	# item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
 		[item_name, item_desc, vendor, full_path, item_price])
 	return None
@@ -195,9 +195,10 @@ def send_email(subject, body):
 		recipients = ['mattp@verdeckt.com', 'chrisz@verdeckt.com'], \
 		sender = ('Verdeckt Support', 'mattp@verdeckt.com'))
 
-# Handles all requests that can come from the NavBar
+# Handles all requests that can come from the nav-bar
 def request_handler(request):
 	error = None
+	# Handle login requests
 	if request.method == 'POST' and request.form['action'] == 'login':
 		req_em = request.form['email']
 		req_pw = request.form['password']
@@ -208,22 +209,23 @@ def request_handler(request):
 				complete_login(req_em, 'user')
 				return error
 			else:
-				error = 'Incorrect password for supplied email'
+				error = 'wrong username/password'
 		elif vendor:
 			if bcrypt.check_password_hash(vendor['password'], req_pw):
 				complete_login(vendor['vendorName'], 'vendor')
 				return error
 			else:
-				error = 'wrong vendor password'
+				error = 'wrong username/password'
 		else:
-			error = 'Email does not exist in either database'
+			error = 'no such email'
+	# Handle sign-up requests
 	elif request.method == 'POST' and request.form['action'] == 'signup':
 		req_em = request.form['email']
 		req_pw = request.form['password']
 		valid_form = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$'
 		valid_em = re.match(valid_form, req_em)
 		if valid_em == None and req_em != ADMIN:
-			error = 'SIGN-IN: Not a valid email address'
+			error = 'not a valid email'
 		elif req_pw:
 			user = query_db('select * from users where email = ?', [req_em], True)
 			vendor = query_db('select * from vendors where email = ?', [req_em], True)
@@ -233,9 +235,10 @@ def request_handler(request):
 				complete_login(req_em, 'user')
 				return error
 			else:
-				error = 'Email already exists in database'
+				error = 'email already exists'
 		else:
-			error = 'No password supplied'
+			error = 'no password supplied'
+	# Handle change requests
 	elif request.method == 'POST' and request.form['action'] == 'change':
 		user_id = flask_login.current_user.id[0]
 		new_pw = bcrypt.generate_password_hash(request.form['new_password'])
@@ -245,8 +248,10 @@ def request_handler(request):
 		else:
 			update_db('update vendors set password = ? where vendorName = ?', \
 				[new_pw, user_id])
+	# Handle send-email requests
 	elif request.method == 'POST' and request.form['action'] == 'email':
 		send_email(request.form['email_subject'], request.form['email_content'])
+	# Return any errors 
 	return error
 
 # Show a vendor page
@@ -297,7 +302,7 @@ def show_all_brands():
 @app.route('/brands', methods = ['GET', 'POST'])
 def brands_request():
 	error = request_handler(request)
-	return redirect(url_for('show_all_brands')) # TODO: pass back the error somehow
+	return redirect(url_for('show_all_brands'))
 
 
 # View Functions - Represent Clothing ##########################################
@@ -330,6 +335,6 @@ def logout():
 
 # Run Function #################################################################
 if __name__ == '__main__':
-	# app.run(host='0.0.0.0') # TODO: Server run
-	app.run()
+	app.run(host='0.0.0.0') # TODO: Server run
+	# app.run()
 
