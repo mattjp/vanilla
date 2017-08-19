@@ -256,6 +256,7 @@ p small {
 	border-top: 1px solid #554853;
 	padding: 10px 10px;
 	width: 100%;
+	display: inline-block;
 }
 
 .featured-pic {
@@ -267,10 +268,13 @@ p small {
 	width: 100%;
 	transition-duration: 0.2s;
 	vertical-align: center;
+	-webkit-backface-visibility: hidden;
 }
 
 .featured-pic img:hover {
+	width: 100%;
 	opacity: 0.3;
+	-webkit-backface-visibility: hidden;
 }
 
 .featured-pic img:focus {
