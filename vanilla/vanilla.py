@@ -32,12 +32,12 @@ PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 app.config.update(dict(
 	DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db'),
 	SECRET_KEY = 'development key', # TODO change me!
-	MAIL_SERVER = 'smtp.gmail.com',
-	MAIL_PORT = 587,
+	# MAIL_SERVER = 'smtp.gmail.com',
+	MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com',
+	MAIL_PORT = 25,
 	MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'mjperetick@gmail.com',
-    MAIL_PASSWORD = '' # Not putting this on GitHub
+    	MAIL_USERNAME = '***REMOVED***',
+    	MAIL_PASSWORD = '***REMOVED***'
 ))
 app.config.from_envvar('VANILLA_SETTINGS', silent = True)
 
@@ -196,8 +196,8 @@ def find_all_vendors():
 # Sends an email
 def send_email(subject, body):
 	mail.send_message(subject = subject, body = body, \
-		recipients = ['mjperetick@gmail.com'], \
-		sender = ('Verdeckt', 'mjperetick@gmail.com'))
+		recipients = ['mattp@verdeckt.com', 'chrisz@verdeckt.com'], \
+		sender = ('Verdeckt Support', 'mattp@verdeckt.com'))
 
 # Handles all requests that can come from the NavBar
 def request_handler(request):
