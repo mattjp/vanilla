@@ -304,6 +304,55 @@ def brands_request():
 	error = request_handler(request)
 	return redirect(url_for('show_all_brands'))
 
+# View Functions - All of the Brands ###########################################
+# Alphamotif
+@app.route('/alphamotif')
+def show_alphamotif():
+	return show_vendor('alphamotif')
+
+@app.route('/alphamotif', methods = ['GET', 'POST'])
+def update_alphamotif(): 
+	return vendor_request_handler('alphamotif', request)
+
+# ASHORE
+@app.route('/ashore')
+def show_ashore():
+	return show_vendor('ashore')
+
+@app.route('/ashore', methods = ['GET', 'POST'])
+def update_ashore(): 
+	return vendor_request_handler('ashore', request)
+
+
+# View Functions - BitterSweet #################################################
+@app.route('/bittersweet')
+def show_bittersweet():
+	return show_vendor('bittersweet')
+
+@app.route('/bittersweet', methods = ['GET', 'POST'])
+def update_bittersweet(): 
+	return vendor_request_handler('bittersweet', request)
+
+
+# View Functions - Gloomy Season ###############################################
+@app.route('/gloomy_season')
+def show_gloomy_season():
+	return show_vendor('gloomy_season')
+
+@app.route('/gloomy_season', methods = ['GET', 'POST'])
+def update_gloomy_season(): 
+	return vendor_request_handler('gloomy_season', request)
+
+
+# View Functions - Marble Soda #################################################
+@app.route('/marble_soda')
+def show_marble_soda():
+	return show_vendor('marble_soda')
+
+@app.route('/marble_soda', methods = ['GET', 'POST'])
+def update_marble_soda(): 
+	return vendor_request_handler('marble_soda', request)
+
 
 # View Functions - Represent Clothing ##########################################
 @app.route('/represent_clo')
@@ -315,14 +364,14 @@ def update_represent_clo():
 	return vendor_request_handler('represent_clo', request)
 
 
-# View Functions - Marble Soda #################################################
-@app.route('/marble_soda')
-def show_marble_soda():
-	return show_vendor('marble_soda')
+# View Functions - Song for the Mute ###########################################
+@app.route('/song_for_the_mute')
+def show_song_for_the_mute():
+	return show_vendor('song_for_the_mute')
 
-@app.route('/marble_soda', methods = ['GET', 'POST'])
-def update_marble_soda(): 
-	return vendor_request_handler('marble_soda', request)
+@app.route('/song_for_the_mute', methods = ['GET', 'POST'])
+def update_song_for_the_mute(): 
+	return vendor_request_handler('song_for_the_mute', request)
 
 
 # View Functions - Logout ######################################################
