@@ -175,26 +175,26 @@ body {
 }
 
 .padding-sm {
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-bottom: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
 }
 
 .upcoming-drop {
-	border: 1px solid #554853;
+	border-right: 1px solid #554853;
 	text-align: right;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 100;
 	color: #554853;
 	padding-top: 0;
 	padding-bottom: 0;
-	padding-right: 8px;
+	margin-top: -8%;
+	/*padding-right: 8px;*/
 	transition-duration: 0.3s;
 }
 
 .upcoming-drop:hover {
-	background-color: #F5F5F5;
-	border-color: #554853;
+	background-color: rgba(85, 72, 83, 0.2);
 }
 
 .upcoming-drop:focus {
@@ -202,12 +202,17 @@ body {
 }
 
 .upcoming-drop .drop-title {
-	color: #554853;
+	color: #fff;
+	background-color: #554853;
 	font-size: 150%;
+	padding-right: 2%;
+	padding-top: 1%;
+	padding-bottom: 1%;
 }
 
 .upcoming-drop h4 {
 	color: #605c64;
+	padding-right: 2%;
 }
 
 .upcoming-drop a:hover {
@@ -261,20 +266,18 @@ p small {
 
 .featured-pic {
 	background-color: #554853;
-	border: 1px solid #554853;
+	/*border: 1px solid #554853;*/
 }
 
 .featured-pic img {
 	width: 100%;
-	transition-duration: 0.2s;
+	transition-duration: 0.3s;
 	vertical-align: center;
-	-webkit-backface-visibility: hidden;
 }
 
 .featured-pic img:hover {
 	width: 100%;
 	opacity: 0.3;
-	-webkit-backface-visibility: hidden;
 }
 
 .featured-pic img:focus {
