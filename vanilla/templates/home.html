@@ -65,21 +65,22 @@
     <div class="container">
       <h1>drops</h1>
       <div class="jumbotron">
-        <div class="row-fluid">
+        <!-- <div class="row-fluid"> -->
 
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
-            <a href="{{ url_for('show_marble_soda') }}">
-              <h3 class="drop-title">Marble Soda</h3>
+              <a href="{{ url_for('show_marble_soda') }}">
+              <h3 class="drop-title">Song for the Mute</h3>
               <h4>2017 \ 09 \ 12</h4>
               <h4 id="timer1"></h4>
+              </a>
             </div>
           </div>
 
           <div class="col-sm-3 padding-sm">
             <div class="upcoming-drop">
               <a href="{{ url_for('show_represent_clo') }}">
-              <h3 class="drop-title">Represent Clo.</h3>
+              <h3 class="drop-title">Represent Clothing</h3>
               <h4>2017 \ 09 \ 13</h4>
               <h4 id="timer2"></h4>
               </a>
@@ -101,46 +102,35 @@
               <h4 id="timer4"></h4>
             </div>
           </div>
-        </div>
+
+        <!-- </div> -->
       </div>
     </div>
 
     <div class="container">
       <h1>featured</h1>
       <div class="jumbotron">
-        <div class="col-sm-4 padding-sm">
+        <div class="col-sm-3 padding-sm">
           <div class="featured-pic">
             <a href="{{ url_for('show_represent_clo') }}"><img src="../static/homepage/repclo.jpeg"></a>
           </div>
         </div>
 
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
+        <div class="col-sm-3 padding-sm">
+          <div class="featured-pic middle-pic">
             <a href="{{ url_for('show_marble_soda') }}"><img src="../static/homepage/marblesoda.gif"></a>
           </div>
         </div>
 
-        <div class="col-sm-4 padding-sm">
+        <div class="col-sm-3 padding-sm">
           <div class="featured-pic">
             <img src="../static/homepage/assc.png">
           </div>
         </div>
 
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/resurgence.png">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
+        <div class="col-sm-3 padding-sm">
           <div class="featured-pic">
             <img src="../static/homepage/777.png">
-          </div>
-        </div>
-
-        <div class="col-sm-4 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/bomb.png">
           </div>
         </div>
       </div>
