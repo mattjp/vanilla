@@ -177,8 +177,8 @@ def find_all_vendors():
 	vendor_list = defaultdict(list)
 	letters = []
 	for vendor in all_vendors:
-		if vendor['displayName'][0] not in letters:
-			letters.append(vendor['displayName'][0])
+		if vendor['vendorName'][0] not in letters:
+			letters.append(vendor['vendorName'][0])
 	for vendor in all_vendors:
 		vendor_list[vendor['displayName'][0]].append((vendor['vendorName'], \
 			vendor['displayName']))
@@ -323,8 +323,7 @@ def show_ashore():
 def update_ashore(): 
 	return vendor_request_handler('ashore', request)
 
-
-# View Functions - BitterSweet #################################################
+# BitterSweet
 @app.route('/bittersweet')
 def show_bittersweet():
 	return show_vendor('bittersweet')
@@ -333,8 +332,25 @@ def show_bittersweet():
 def update_bittersweet(): 
 	return vendor_request_handler('bittersweet', request)
 
+# Bomb Clothing Co.
+@app.route('/bomb_clo_co')
+def show_bomb_clo_co():
+	return show_vendor('bomb_clo_co')
 
-# View Functions - Gloomy Season ###############################################
+@app.route('/bomb_clo_co', methods = ['GET', 'POST'])
+def update_bomb_clo_co(): 
+	return vendor_request_handler('bomb_clo_co', request)
+
+# Deadnight
+@app.route('/deadnight')
+def show_deadnight():
+	return show_vendor('deadnight')
+
+@app.route('/deadnight', methods = ['GET', 'POST'])
+def update_deadnight(): 
+	return vendor_request_handler('deadnight', request)
+
+# Gloomy Season
 @app.route('/gloomy_season')
 def show_gloomy_season():
 	return show_vendor('gloomy_season')
@@ -343,8 +359,34 @@ def show_gloomy_season():
 def update_gloomy_season(): 
 	return vendor_request_handler('gloomy_season', request)
 
+# Guerrilla Group
+@app.route('/guerrilla_group')
+def show_guerrilla_group():
+	return show_vendor('guerrilla_group')
 
-# View Functions - Marble Soda #################################################
+@app.route('/guerrilla_group', methods = ['GET', 'POST'])
+def update_guerrilla_group(): 
+	return vendor_request_handler('guerrilla_group', request)
+
+# Leftovers
+@app.route('/leftovers')
+def show_leftovers():
+	return show_vendor('leftovers')
+
+@app.route('/leftovers', methods = ['GET', 'POST'])
+def update_leftovers(): 
+	return vendor_request_handler('leftovers', request)
+
+# Maharishi
+@app.route('/maharishi')
+def show_maharishi():
+	return show_vendor('maharishi')
+
+@app.route('/maharishi', methods = ['GET', 'POST'])
+def update_maharishi(): 
+	return vendor_request_handler('maharishi', request)
+
+# Marble Soda
 @app.route('/marble_soda')
 def show_marble_soda():
 	return show_vendor('marble_soda')
@@ -353,18 +395,16 @@ def show_marble_soda():
 def update_marble_soda(): 
 	return vendor_request_handler('marble_soda', request)
 
+# Ronin Division
+@app.route('/ronin_division')
+def show_ronin_division():
+	return show_vendor('ronin_division')
 
-# View Functions - Represent Clothing ##########################################
-@app.route('/represent_clo')
-def show_represent_clo():
-	return show_vendor('represent_clo')
+@app.route('/ronin_division', methods = ['GET', 'POST'])
+def update_ronin_division(): 
+	return vendor_request_handler('ronin_division', request)
 
-@app.route('/represent_clo', methods = ['GET', 'POST'])
-def update_represent_clo():
-	return vendor_request_handler('represent_clo', request)
-
-
-# View Functions - Song for the Mute ###########################################
+# Song for the Mute
 @app.route('/song_for_the_mute')
 def show_song_for_the_mute():
 	return show_vendor('song_for_the_mute')

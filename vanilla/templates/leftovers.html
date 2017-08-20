@@ -41,6 +41,11 @@
           <li>
             <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
           </li>
+          {% if session.logged_in and (current_user.id[0] == 'leftovers' or current_user.id[0] == 'verdeckt_admin') %}
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </li>
+          {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <div class="page-title">
@@ -63,83 +68,46 @@
     {% endif %}
 
     <div class="container">
-      <h1>drops</h1>
-      <div class="jumbotron">
-        <!-- <div class="row-fluid"> -->
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <a href="{{ url_for('show_marble_soda') }}">
-              <h3 class="drop-title">Song for the Mute</h3>
-              <h4>2017 \ 09 \ 12</h4>
-              <h4 id="timer1"></h4>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <a href="{{ url_for('show_home') }}">
-              <h3 class="drop-title">Represent Clothing</h3>
-              <h4>2017 \ 09 \ 13</h4>
-              <h4 id="timer2"></h4>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <h3 class="drop-title">Steady Hands Apparel</h3>
-              <h4>2017 \ 09 \ 14</h4>
-              <h4 id="timer3"></h4>
-            </div>
-          </div>
-
-          <div class="col-sm-3 padding-sm">
-            <div class="upcoming-drop">
-              <h3 class="drop-title">Anti Social Social Club</h3>
-              <h4>2017 \ 09 \ 15</h4>
-              <h4 id="timer4"></h4>
-            </div>
-          </div>
-
-        <!-- </div> -->
-      </div>
-    </div>
-
-    <div class="container">
-      <h1>featured</h1>
-      <div class="jumbotron">
-        <div class="col-sm-3 padding-sm">
-          <div class="featured-pic">
-            <a href="{{ url_for('show_home') }}"><img src="../static/homepage/repclo.jpeg"></a>
-          </div>
-        </div>
-
-        <div class="col-sm-3 padding-sm">
-          <div class="featured-pic middle-pic">
-            <a href="{{ url_for('show_marble_soda') }}"><img src="../static/homepage/marblesoda.gif"></a>
-          </div>
-        </div>
-
-        <div class="col-sm-3 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/assc.png">
-          </div>
-        </div>
-
-        <div class="col-sm-3 padding-sm">
-          <div class="featured-pic">
-            <img src="../static/homepage/777.png">
-          </div>
+      <h1><a href="https://www.facebook.com/leftoversnewyork/"><small><i class="fa fa-facebook-f" aria-hidden="true"></i></small></a> \ <a href="https://www.instagram.com/leftoversstore/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="http://www.eatyourleftovers.com/">Leftovers</a></h1>
+      <div class="jumbotron overview">
+        <div class="brand-overview">
+          <p>Founded in Brooklyn in 2017, Leftovers is an independent design group dedicated to capturing all the emotions of human expression. Leftovers encourages everyone to share and appreciate our differences by forging ahead with these aspects of ourselves in mind.</p>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <div class="goodbye">
-        <a href="http://mattjp.co"><p>made by matt <i class="fa fa-code" aria-hidden="true"></i></p></a>
+      <h1>pieces</h1>
+      <div class="jumbotron">  
+        <div class="row">
+        {% for item in items %}
+        <div class="col-sm-4 vendor-item">
+          {% if item['price'] %}
+          <div class="item-title">
+            <p>{{ item['itemName'] }} \ <span class="item-price"><small>$</small>{{ item['price'] }}</span></p>
+          </div>
+          {% else %}
+          <div class="item-title">
+            <p>{{ item['itemName'] }}</p>
+          </div>
+          {% endif %}
+          <img src="{{ item['pathToImg'] }}">
+          <div class="item-description">
+            <p>{{ item['description'] }}</p>
+          </div>
+          {% if session.logged_in and (current_user.id[0] == 'leftovers' or current_user.id[0] == 'verdeckt_admin') %}
+          <div class="item-delete-btn">
+            <form action="{{ url_for('update_leftovers') }}" method="POST">
+              <input type="hidden" name="action" value="del_item"> 
+              <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
+              <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
       </div>
+    </div>
     </div>
 
     <div id="login_btn" class="modal fade" role="dialog">
@@ -150,7 +118,7 @@
             <h3>sign up and\or login</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_home') }}" method="POST">
+            <form action="{{ url_for('show_leftovers') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="text" name="email" placeholder="email" required class="right-just">
@@ -177,7 +145,7 @@
             <h3>change your password</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_home') }}" method="POST">
+            <form action="{{ url_for('show_leftovers') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="password" placeholder="new password" name="new_password" required>
@@ -202,7 +170,7 @@
             <h3>email us</h3>
           </div>
           <div class="modal-body">
-            <form id="contact_form" action="{{ url_for('show_home') }}" method="POST">
+            <form id="contact_form" action="{{ url_for('show_leftovers') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
@@ -218,66 +186,42 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
+
+    <div id="add_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3>add an item</h3>
+        </div>
+        <div class="modal-body">
+          <form id="new_item_form" action="{{ url_for('update_leftovers') }}" method="POST" enctype="multipart/form-data">
+            <div class="fields-wrapper">
+              <div class="fields">
+                <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>
+                <textarea form="new_item_form" name="itemDesc" cols="50" rows="5" placeholder="item description" required></textarea>
+                <div class="price-field">
+                  <input type="text" placeholder="price (optional)" name="itemPrice">
+                </div>
+                <div class="file-field">
+                  <input type="file" name="file" accept="image/*" required>
+                </div>
+                <input type="hidden" name="action" value="add_item">
+              </div>
+            </div>
+            <div class="submit-wrapper">
+              <div class="submit-btn">
+                <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="../static/scripts/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <script>
-    var countDownDate1 = new Date("Sep 12, 2017 21:00:00").getTime();
-    var countDownDate2 = new Date("Sep 13, 2017 22:00:00").getTime();
-    var countDownDate3 = new Date("Sep 14, 2017 23:00:00").getTime();
-    var countDownDate4 = new Date("Sep 15, 2017 20:00:00").getTime();
-
-    var x = setInterval(function() {
-
-      var now = new Date().getTime();
-      var distance1 = countDownDate1 - now;
-      var distance2 = countDownDate2 - now;
-      var distance3 = countDownDate3 - now;
-      var distance4 = countDownDate4 - now;
-
-      var days1 = Math.floor(distance1 / (1000 * 60 * 60 * 24));
-      var hours1 = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes1 = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds1 = Math.floor((distance1 % (1000 * 60)) / 1000);
-
-      var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
-      var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
-
-      var days3 = Math.floor(distance3 / (1000 * 60 * 60 * 24));
-      var hours3 = Math.floor((distance3 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes3 = Math.floor((distance3 % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds3 = Math.floor((distance3 % (1000 * 60)) / 1000);
-
-      var days4 = Math.floor(distance4 / (1000 * 60 * 60 * 24));
-      var hours4 = Math.floor((distance4 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes4 = Math.floor((distance4 % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds4 = Math.floor((distance4 % (1000 * 60)) / 1000);
-
-      document.getElementById("timer1").innerHTML = days1 + " \\ " + hours1 + " \\ " + minutes1 + " \\ " + seconds1;
-      document.getElementById("timer2").innerHTML = days2 + " \\ " + hours2 + " \\ " + minutes2 + " \\ " + seconds2;
-      document.getElementById("timer3").innerHTML = days3 + " \\ " + hours3 + " \\ " + minutes3 + " \\ " + seconds3;
-      document.getElementById("timer4").innerHTML = days4 + " \\ " + hours4 + " \\ " + minutes4 + " \\ " + seconds4;
-      if (distance1 < 0) {
-        clearInterval(x);
-        document.getElementById("timer1").innerHTML = "dropped";
-      }
-      if (distance2 < 0) {
-        clearInterval(x);
-        document.getElementById("timer2").innerHTML = "dropped";
-      }
-      if (distance3 < 0) {
-        clearInterval(x);
-        document.getElementById("timer3").innerHTML = "dropped";
-      }
-      if (distance4 < 0) {
-        clearInterval(x);
-        document.getElementById("timer4").innerHTML = "dropped";
-      }
-    }, 1000);
-  </script>
 </html>
