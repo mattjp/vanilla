@@ -74,6 +74,31 @@
           <p>A small startup label from Auckland, New Zealand. BitterSweet started as a design agency, tailoring to clients needs. After realizing that the profession didn’t quite suit their personality, they came back to the clothing game with a different approach - creating their own clothing.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">

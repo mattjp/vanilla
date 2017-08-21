@@ -74,6 +74,31 @@
           <p>Specializing in art-direction, print content, photography, music, video, and web development, Guerrilla Group presents its products at an intersection of these mediums. Their primary objective is to take a formless concept and give it visible shape, while incorporating themes of culture, politics, and society, resulting in a clear and encompassing message. Established in May of 2013 by 5 members.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">

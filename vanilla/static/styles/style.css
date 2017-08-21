@@ -304,6 +304,14 @@ p small {
 	float: right !important;
 }
 
+.col-sm-1 {
+	float: right !important;
+}
+
+.no-line {
+	border-top: none !important;
+}
+
 .vendor-name a {
 	color: #554853;
 	font-family: 'Roboto', sans-serif;
@@ -315,6 +323,17 @@ p small {
 .vendor-name a:hover {
 	text-decoration: none;
 	color: #d6d0d0;
+}
+
+.vendor-tag-list li {
+	display: inline-block;
+	float: right !important;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 100;
+	margin-right: 1.6%;
+	padding: 2px 1%;
+	background-color: #554853;
+	color: #fff;
 }
 
 .big-letter {

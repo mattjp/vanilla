@@ -9,7 +9,13 @@ create table if not exists vendors (
 	vendorName text not null,
 	displayName text not null,
 	password text,
-	email text
+	email text,
+	type_1 text, 
+	type_2 text, 
+	type_3 text,
+	loc text,
+	shipping text,
+	category text
 );
 
 create table if not exists items (

@@ -71,9 +71,34 @@
       <h1><a href="https://www.instagram.com/marbles0da/?hl=en"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="https://marblesoda.jp">marble soda</a></h1>
       <div class="jumbotron overview">
         <div class="brand-overview">
-          <p>just two (2) crazy japanese boy</p>
+          <p>just one (1) crazy japanese boy</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">

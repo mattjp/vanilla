@@ -101,8 +101,18 @@ def update_db(query, args = ()):
 def create_vendor_command():
 	v_name = input('Vendor Name (shortened, no spaces): ')
 	v_full_name = input('Vendor Name (Full): ')
-	insert('vendors', ['vendorName', 'displayName'], [v_name, v_full_name])
+	type_1 = input('First type (can be empty): ')
+	type_2 = input('Second type (can be empty): ')
+	type_3 = input('Third type (can be empty): ')
+	loc = input('Location: ')
+	shipping = input('Shipping (make sure it ends with \'shipping\'): ')
+	category = input('Vendor size (make sure it ends with \'staff\'): ')
+	insert('vendors', ['vendorName', 'displayName', 'type_1', 'type_2', 'type_3', \
+		'loc', 'shipping', 'category'], [v_name, v_full_name, type_1, type_2, \
+		type_3, loc, shipping, category])
 	os.mkdir('static/' + v_name)
+	# Add a small text file so GitHub will upload the directory
+	os.system('echo ' + v_name + ' > ' + 'static/' + v_name + '/' + v_name + '.txt')
 	print('Added', v_full_name, 'to vendors.')
 
 # Creates vendor in the table with all columns filled out
@@ -112,8 +122,15 @@ def create_vendor_full_command():
 	v_full_name = input('Vendor Name (Full): ')
 	v_em = input('Vendor Email: ' )
 	v_pw = bcrypt.generate_password_hash(input('Vendor Password: '))
-	insert('vendors', ['vendorName', 'displayName', 'email', 'password'], \
-		[v_name, v_full_name, v_em, v_pw])
+	type_1 = input('First type (can be empty): ')
+	type_2 = input('Second type (can be empty): ')
+	type_3 = input('Third type (can be empty): ')
+	loc = input('Location: ')
+	shipping = input('Shipping (make sure it ends with \'shipping\'): ')
+	category = input('Vendor size: ')
+	insert('vendors', ['vendorName', 'displayName', 'email', 'password', 'type_1', \
+		'type_2', 'type_3', 'loc', 'shipping', 'category'], [v_name, v_full_name, \
+		v_em, v_pw, type_1, type_2, type_3, loc, shipping, category])
 	os.mkdir('static/' + v_name)
 	print('Added', v_full_name, 'to vendors.')
 
@@ -258,7 +275,8 @@ def request_handler(request):
 def show_vendor(vendor):
 	addr = vendor + '.html'
 	items = query_db('select * from items where vendor = ?', [vendor])
-	return render_template(addr, items = items)
+	brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
+	return render_template(addr, items = items, brand = brand)
 
 # Handle requests for a vendor page
 def vendor_request_handler(vendor, request):
