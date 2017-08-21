@@ -74,6 +74,31 @@
           <p>Rōnin is looking to define the culture and experiences of the vagabond, incorporating personality and a unique touch into everything they make in hopes of sharing experiences and stories with anyone willing to listen. Rōnin tries to create an ever-growing family that will one day lead their project to be much more than just a project.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>  
     </div>
 
     <div class="container">

@@ -74,6 +74,31 @@
           <p>Emerging in the Manchester streetwear space, Deadnight is gaining traction with their motifs of black-letter typefaces, bold colors, and premium materials. Incredibly, prices are kept low due to a lack of overhead.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">

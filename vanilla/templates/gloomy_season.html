@@ -74,6 +74,31 @@
           <p>Gloomy Season is an independent streetwear brand based out of Connecticut that blends common horror genre tropes with organic earth tones.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">

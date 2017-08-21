@@ -74,6 +74,31 @@
           <p>Maharishi was founded in 1994 by Hardy Blechman with the vision to create environmentally sound, fair-trade, long-lasting, high-quality, utilitarian clothing. The collection has always included the strong natural fiber hemp, as well as organic cottons and upcycled military clothing. Maharishi maintains a strong ethos of respect for nature while utilizing the latest technology.</p>
         </div>
       </div>
+      <ul class="vendor-tag-list">
+        {% if brand['type_1'] %}
+        <li>{{ brand['type_1'] }}</li>
+        {% endif %}
+
+        {% if brand['type_2'] %}
+        <li>{{ brand['type_2'] }}</li>
+        {% endif %}
+
+        {% if brand['type_3'] %}
+        <li>{{ brand['type_3'] }}</li>
+        {% endif %}
+
+        {% if brand['loc'] %}
+        <li>{{ brand['loc'] }}</li>
+        {% endif %}
+
+        {% if brand['shipping'] %}
+        <li>{{ brand['shipping'] }}</li>
+        {% endif %}
+
+        {% if brand['category'] %}
+        <li>{{ brand['category'] }}</li>
+        {% endif %}        
+      </ul>
     </div>
 
     <div class="container">
