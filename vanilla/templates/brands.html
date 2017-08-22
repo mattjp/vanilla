@@ -38,9 +38,6 @@
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
-          <li>
-            <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
-          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <div class="page-title">
@@ -67,7 +64,6 @@
       <div class="jumbotron">
         {% for letter, brands in items.items() %}
         <div class="col-sm-12">
-        <!-- <div class="letter-row"> -->
           <div class="big-letter">
             <h1>{{ letter }}</h1>
           </div>
@@ -76,11 +72,6 @@
         <ul class="vendor-name-list">
           <li><a href="{{ brand[0] }}">{{ brand[1] }}</a></li>
         </ul>
-        <!-- <div class="col-sm-2">
-          <div class="vendor-name">
-            <p><a href="{{ brand[0] }}">{{ brand[1] }}</a></p>
-          </div>
-        </div> -->
         {% endfor %}
         {% endfor %}
       </div>  

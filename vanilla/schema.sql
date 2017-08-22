@@ -26,3 +26,9 @@ create table if not exists items (
 	price text,
 	pathToImg text
 );
+
+create table if not exists drops (
+	tid integer primary key autoincrement,
+	dropVendor text not null,
+	dropDate datetime not null
+);
