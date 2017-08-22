@@ -285,7 +285,8 @@ def vendor_request_handler(vendor, request):
 	error = request_handler(request)
 	if error: 
 		items = query_db('select * from items where vendor = ?', [vendor])
-		return render_template(vendor, error = error, items = items)
+		brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
+		return render_template(addr, error = error, items = items, brand = brand)
 	elif request.method == 'POST' and (flask_login.current_user.id[0] == vendor or \
 		flask_login.current_user.id[0] == ADMIN):
 		if request.form['action'] == 'add_item':
@@ -293,7 +294,8 @@ def vendor_request_handler(vendor, request):
 			request.files['file'], vendor, request.form['itemPrice'])
 			if error:
 				items = query_db('select * from items where vendor = ?', [vendor])
-				return render_template(addr, error = error, items = items)
+				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
+				return render_template(addr, error = error, items = items, brand = brand)
 		elif request.form['action'] == 'del_item':
 			delete_item(request.form['itemName'], vendor)
 	return redirect(url_for(redir))

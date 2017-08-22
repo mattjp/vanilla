@@ -38,9 +38,6 @@
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
-          <li>
-            <button class="btn btn-default navbar-btn" type="button"><i class="fa fa-instagram" aria-hidden="true"></i></button>
-          </li>
           {% if session.logged_in and (current_user.id[0] == 'ronin_division' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
