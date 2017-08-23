@@ -38,12 +38,9 @@
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
-          {% if session.logged_in and (current_user.id[0] == 'alphamotif' or current_user.id[0] == 'verdeckt_admin') %}
+          {% if session.logged_in and (current_user.id[0] == 'pearly_whites' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-          </li>
-          <li>
-            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_drop_btn"><i class="fa fa-calendar-o" aria-hidden="true"></i></button>
           </li>
           {% endif %}
         </ul>
@@ -68,10 +65,10 @@
     {% endif %}
 
     <div class="container">
-      <h1><a href="https://www.facebook.com/alphamotif/"><small><i class="fa fa-facebook-f" aria-hidden="true"></i></small></a> \ <a href="https://www.instagram.com/alpha_motif/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="http://www.alphamotif.net/">Alphamotif</a></h1>
+      <h1><a href="https://www.instagram.com/pearlywhites_uk/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="https://www.pearly.supply/">Pearly Whites</a></h1>
       <div class="jumbotron overview">
         <div class="brand-overview">
-          <p>No mass production - this is the mantra of Alphamotif. Each item is limited in quantity and availability. Unrelenting in the pursuit of quality, Alphamotif knows high-end textiles to a near unparalleled degree.</p>
+          <p>Still owned and operated by a single person, Pearly Whites places the utmost focus on quality. “Established in the year 2036” is how the owner, Niall, describes his pieces. Pearly Whites has recently having gained some traction in the streetwear scene after  being spotted on some of the biggest YouTube celebrities.</p>
         </div>
       </div>
       <ul class="vendor-tag-list">
@@ -120,9 +117,9 @@
           <div class="item-description">
             <p>{{ item['description'] }}</p>
           </div>
-          {% if session.logged_in and (current_user.id[0] == 'alphamotif' or current_user.id[0] == 'verdeckt_admin') %}
+          {% if session.logged_in and (current_user.id[0] == 'pearly_whites' or current_user.id[0] == 'verdeckt_admin') %}
           <div class="item-delete-btn">
-            <form action="{{ url_for('update_alphamotif') }}" method="POST">
+            <form action="{{ url_for('update_pearly_whites') }}" method="POST">
               <input type="hidden" name="action" value="del_item"> 
               <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
               <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -143,7 +140,7 @@
             <h3>sign up and\or login</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form action="{{ url_for('show_pearly_whites') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="text" name="email" placeholder="email" required class="right-just">
@@ -170,7 +167,7 @@
             <h3>change your password</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form action="{{ url_for('show_pearly_whites') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="password" placeholder="new password" name="new_password" required>
@@ -195,7 +192,7 @@
             <h3>email us</h3>
           </div>
           <div class="modal-body">
-            <form id="contact_form" action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form id="contact_form" action="{{ url_for('show_pearly_whites') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
@@ -213,15 +210,15 @@
       </div>
     </div>
 
-    <div id="add_drop_btn" class="modal fade" role="dialog">
+    <div id="add_btn" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>add an item</h3>
-          </div>
-          <div class="modal-body">
-            <form id="new_item_form" action="{{ url_for('update_alphamotif') }}" method="POST" enctype="multipart/form-data">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3>add an item</h3>
+        </div>
+        <div class="modal-body">
+          <form id="new_item_form" action="{{ url_for('update_pearly_whites') }}" method="POST" enctype="multipart/form-data">
             <div class="fields-wrapper">
               <div class="fields">
                 <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>
@@ -232,16 +229,15 @@
                 <div class="file-field">
                   <input type="file" name="file" accept="image/*" required>
                 </div>
-                  <input type="hidden" name="action" value="add_item">
-                </div>
+                <input type="hidden" name="action" value="add_item">
               </div>
-              <div class="submit-wrapper">
-                <div class="submit-btn">
-                  <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                </div>
+            </div>
+            <div class="submit-wrapper">
+              <div class="submit-btn">
+                <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

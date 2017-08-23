@@ -588,6 +588,10 @@
 		color: #fff;
 	}
 
+	.form-group {
+		text-align: center;
+	}
+
 	/* Add Item Modal *********************************************************/
 	.file-field {
 		text-align: center;
