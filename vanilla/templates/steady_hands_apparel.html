@@ -38,7 +38,7 @@
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
-          {% if session.logged_in and (current_user.id[0] == 'alphamotif' or current_user.id[0] == 'verdeckt_admin') %}
+          {% if session.logged_in and (current_user.id[0] == 'steady_hands_apparel' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
           </li>
@@ -68,10 +68,10 @@
     {% endif %}
 
     <div class="container">
-      <h1><a href="https://www.facebook.com/alphamotif/"><small><i class="fa fa-facebook-f" aria-hidden="true"></i></small></a> \ <a href="https://www.instagram.com/alpha_motif/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="http://www.alphamotif.net/">Alphamotif</a></h1>
+      <h1><a href="https://www.instagram.com/steadyhandsapparel/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="http://www.steadyhandsapparel.com/">Steady Hands Apparel</a></h1>
       <div class="jumbotron overview">
         <div class="brand-overview">
-          <p>No mass production - this is the mantra of Alphamotif. Each item is limited in quantity and availability. Unrelenting in the pursuit of quality, Alphamotif knows high-end textiles to a near unparalleled degree.</p>
+          <p>Pale colours, soothing tones, and relaxed vibes is what independent label Steady Hands Apparel is all about. No blanks are used in the manufacturing of any pieces, resulting in every piece being extremely unique.</p>
         </div>
       </div>
       <ul class="vendor-tag-list">
@@ -120,9 +120,9 @@
           <div class="item-description">
             <p>{{ item['description'] }}</p>
           </div>
-          {% if session.logged_in and (current_user.id[0] == 'alphamotif' or current_user.id[0] == 'verdeckt_admin') %}
+          {% if session.logged_in and (current_user.id[0] == 'steady_hands_apparel' or current_user.id[0] == 'verdeckt_admin') %}
           <div class="item-delete-btn">
-            <form action="{{ url_for('update_alphamotif') }}" method="POST">
+            <form action="{{ url_for('update_steady_hands_apparel') }}" method="POST">
               <input type="hidden" name="action" value="del_item"> 
               <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
               <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -143,7 +143,7 @@
             <h3>sign up and\or login</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form action="{{ url_for('show_steady_hands_apparel') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="text" name="email" placeholder="email" required class="right-just">
@@ -170,7 +170,7 @@
             <h3>change your password</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form action="{{ url_for('show_steady_hands_apparel') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="password" placeholder="new password" name="new_password" required>
@@ -195,7 +195,7 @@
             <h3>email us</h3>
           </div>
           <div class="modal-body">
-            <form id="contact_form" action="{{ url_for('show_alphamotif') }}" method="POST">
+            <form id="contact_form" action="{{ url_for('show_steady_hands_apparel') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
@@ -221,7 +221,7 @@
             <h3>add an item</h3>
           </div>
           <div class="modal-body">
-            <form id="new_item_form" action="{{ url_for('update_alphamotif') }}" method="POST" enctype="multipart/form-data">
+            <form id="new_item_form" action="{{ url_for('update_steady_hands_apparel') }}" method="POST" enctype="multipart/form-data">
             <div class="fields-wrapper">
               <div class="fields">
                 <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>

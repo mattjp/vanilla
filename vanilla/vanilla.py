@@ -44,8 +44,8 @@ mail = Mail(app)
 
 # Database Functions ###########################################################
 def connect_db():
-	# rv = sqlite3.connect(app.config['DATABASE'])
 	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
+	# rv = sqlite3.connect(app.config['DATABASE'])
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -343,6 +343,15 @@ def show_ashore():
 def update_ashore(): 
 	return vendor_request_handler('ashore', request)
 
+# Atelier LPM
+@app.route('/atelier_lpm')
+def show_atelier_lpm():
+	return show_vendor('atelier_lpm')
+
+@app.route('/atelier_lpm', methods = ['GET', 'POST'])
+def update_atelier_lpm(): 
+	return vendor_request_handler('atelier_lpm', request)
+
 # BitterSweet
 @app.route('/bittersweet')
 def show_bittersweet():
@@ -388,6 +397,15 @@ def show_guerrilla_group():
 def update_guerrilla_group(): 
 	return vendor_request_handler('guerrilla_group', request)
 
+# Guilt Association
+@app.route('/guilt_association')
+def show_guilt_association():
+	return show_vendor('guilt_association')
+
+@app.route('/guilt_association', methods = ['GET', 'POST'])
+def update_guilt_association(): 
+	return vendor_request_handler('guilt_association', request)
+
 # Leftovers
 @app.route('/leftovers')
 def show_leftovers():
@@ -396,6 +414,15 @@ def show_leftovers():
 @app.route('/leftovers', methods = ['GET', 'POST'])
 def update_leftovers(): 
 	return vendor_request_handler('leftovers', request)
+
+# Lordz
+@app.route('/lordz')
+def show_lordz():
+	return show_vendor('lordz')
+
+@app.route('/lordz', methods = ['GET', 'POST'])
+def update_lordz(): 
+	return vendor_request_handler('lordz', request)
 
 # Maharishi
 @app.route('/maharishi')
@@ -415,6 +442,15 @@ def show_marble_soda():
 def update_marble_soda(): 
 	return vendor_request_handler('marble_soda', request)
 
+# Pearly Whites
+@app.route('/pearly_whites')
+def show_pearly_whites():
+	return show_vendor('pearly_whites')
+
+@app.route('/pearly_whites', methods = ['GET', 'POST'])
+def update_pearly_whites(): 
+	return vendor_request_handler('pearly_whites', request)
+
 # Ronin Division
 @app.route('/ronin_division')
 def show_ronin_division():
@@ -424,6 +460,15 @@ def show_ronin_division():
 def update_ronin_division(): 
 	return vendor_request_handler('ronin_division', request)
 
+# Seance Clothing
+@app.route('/seance_clothing')
+def show_seance_clothing():
+	return show_vendor('seance_clothing')
+
+@app.route('/seance_clothing', methods = ['GET', 'POST'])
+def update_seance_clothing(): 
+	return vendor_request_handler('seance_clothing', request)
+
 # Song for the Mute
 @app.route('/song_for_the_mute')
 def show_song_for_the_mute():
@@ -432,6 +477,24 @@ def show_song_for_the_mute():
 @app.route('/song_for_the_mute', methods = ['GET', 'POST'])
 def update_song_for_the_mute(): 
 	return vendor_request_handler('song_for_the_mute', request)
+
+# Steady Hands Apparel
+@app.route('/steady_hands_apparel')
+def show_steady_hands_apparel():
+	return show_vendor('steady_hands_apparel')
+
+@app.route('/steady_hands_apparel', methods = ['GET', 'POST'])
+def update_steady_hands_apparel(): 
+	return vendor_request_handler('steady_hands_apparel', request)
+
+# VVIDessnce
+@app.route('/vvidessnce')
+def show_vvidessnce():
+	return show_vendor('vvidessnce')
+
+@app.route('/vvidessnce', methods = ['GET', 'POST'])
+def update_vvidessnce(): 
+	return vendor_request_handler('vvidessnce', request)
 
 
 # View Functions - Logout ######################################################
