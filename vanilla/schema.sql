@@ -15,7 +15,8 @@ create table if not exists vendors (
 	type_3 text,
 	loc text,
 	shipping text,
-	category text
+	category text,
+	hasDrop text
 );
 
 create table if not exists items (

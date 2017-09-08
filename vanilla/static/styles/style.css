@@ -504,6 +504,10 @@
 	}
 
 	/* Modal ******************************************************************/
+	.modal-header button:focus {
+		outline: none;
+	}
+
 	.modal-header {
 		font-family: 'Roboto Slab', serif;
 		font-weight: 100;
@@ -520,7 +524,6 @@
 		border-width: 0px;
 		border-radius: 0px;
 		background-color: #fff;
-
 	}
 
 	.modal-body .fields-wrapper {
@@ -542,9 +545,17 @@
 	    text-align: center;
 	}
 
+	.modal-body .name-field input {
+		text-align: left !important;
+	}
+
 	.modal-body .fields input:focus {
 	    background-color: #F5F5F5;
 	    outline: none;
+	}
+
+	.modal-body .fields input[type="time"] {
+		text-align: center;
 	}
 
 	.modal-body .submit-wrapper {
@@ -557,11 +568,44 @@
 		padding: 5px;
 		border: 1px solid #554853;
 		transition: 0.5s;
+		width: 50%;
+		height: 10em;
+		margin-bottom: 0.2em;
 	}
 
 	.fields textarea:focus {
 		background-color: #F5F5F5;
 		outline: none;
+	}
+
+	.fields .price-field {
+		width: 77%;
+		display: inline-block;
+	}
+
+	.fields .price-field input {
+		text-align: left;
+	}
+
+	.fields .price-field select {
+		font-family: 'Roboto', sans-serif;
+		background-color: #fff;
+		padding: 6px 12px;
+	    margin-bottom: 8px;
+		box-sizing: border-box;
+	    border: 1px solid #554853;
+	    transition: 0.5s;
+	    outline: none;
+	    text-align: center;
+	    border-radius: 0;
+	    -webkit-appearance: none;
+	    text-align: center;
+	    text-align-last:center; 
+	}
+
+	.currency-selector {
+		width: 14%;
+		text-align-last:center; 
 	}
 
 	.modal-body .submit-btn button {
@@ -592,6 +636,7 @@
 		text-align: center;
 	}
 
+
 	/* Add Item Modal *********************************************************/
 	.file-field {
 		text-align: center;
@@ -602,6 +647,7 @@
 	.file-field input {
 		line-height: 1ex;
 		height: 100%;
+		text-align: center;
 	}
 
 	/* Upcoming drops *********************************************************/
@@ -749,7 +795,7 @@
 		border-top: none !important;
 	}
 
-	.vendor-name-list li {
+	.jumbotron .vendor-name-list li {
 		display: inline-block;
 		float: right !important;
 		font-family: 'Roboto', sans-serif;
@@ -760,16 +806,14 @@
 		background-color: #554853;
 		transition-duration: 0.3s;
 		border: 1px solid #fff;
+		color: #fff;
 	}
 
 	.vendor-name-list li:hover {
 		text-decoration: none;
 		background-color: #fff;
 		border: 1px solid #554853;
-	}
-
-	.vendor-name-list a {
-		color: #fff !important;
+		color: #554853;
 	}
 
 	.vendor-name-list a:hover {
@@ -840,6 +884,7 @@
 		font-family: 'Roboto', sans-serif;
 		font-weight: 100;
 		font-size: 120%;
+		white-space: pre-line;
 	}
 
 	.item-price {
@@ -870,6 +915,7 @@
 	.item-delete-btn button:focus {
 		outline: none;
 	}
+
 
 	/* Footer *****************************************************************/
 	.goodbye {
