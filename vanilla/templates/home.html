@@ -201,8 +201,8 @@
           <div class="modal-body">
             <form id="contact_form" action="{{ url_for('show_home') }}" method="POST">
               <div class="fields-wrapper">
-                <div class="fields">
-                  <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
+                <div class="fields email-fields">
+                  <input name="email_subject" placeholder="subject"></textarea>
                   <textarea form="contact_form" name="email_content" cols="50" rows="5" placeholder="content"></textarea>
                 </div>
               </div>

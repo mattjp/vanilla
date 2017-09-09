@@ -1,4 +1,4 @@
-import os, sqlite3, re, flask_login
+import os, sqlite3, re, flask_login, calendar
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_bcrypt import Bcrypt
@@ -295,7 +295,6 @@ def vendor_request_handler(vendor, request):
 				request.form['itemPrice']
 			error = add_item(request.form['itemName'], request.form['itemDesc'], \
 			request.files['file'], vendor, price_with_symbol)
-			# print(request.form['currency_type'])
 			if error:
 				items = query_db('select * from items where vendor = ?', [vendor])
 				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
@@ -311,9 +310,14 @@ def vendor_request_handler(vendor, request):
 				items = query_db('select * from items where vendor = ?', [vendor])
 				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
 				return render_template(addr, error = error, items = items, brand = brand)
-			print('yeas')
-			print(request.form['drop_date'], request.form['drop_time'])
-			# insert('drops', ['dropVendor', 'dropDate'], [vendor, ])
+			date = request.form['drop_date'].split(' \\ ')
+			date[1] = calendar.month_name[int(date[1])][:3]
+			time = request.form['drop_time'] + ':00'
+			js_date = date[1] + ' ' + date[0] + ', ' + date[2] + ' ' + time
+			# print(js_date)
+			insert('drops', ['dropVendor', 'dropDate'], [vendor, js_date])
+			update_db('update vendors set hasDrop = ? where vendorName = ?', \
+				['True', vendor])
 	return redirect(url_for(redir))
 
 
@@ -341,7 +345,7 @@ def brands_request():
 	return redirect(url_for('show_all_brands'))
 
 
-# View Functions - All of the Brands ###########################################
+# View Functions - Individual Vendors ##########################################
 # Alphamotif
 @app.route('/alphamotif')
 def show_alphamotif():
