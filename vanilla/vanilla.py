@@ -1,4 +1,4 @@
-import os, sqlite3, re, flask_login
+import os, sqlite3, re, flask_login, calendar
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_bcrypt import Bcrypt
@@ -197,10 +197,8 @@ def find_all_vendors():
 		if vendor['vendorName'][0] not in letters:
 			letters.append(vendor['vendorName'][0])
 	for vendor in all_vendors:
-		vendor_list[vendor['displayName'][0]].append((vendor['vendorName'], \
+		vendor_list[vendor['vendorName'][0]].append((vendor['vendorName'], \
 			vendor['displayName']))
-	for letter, vendor in vendor_list.items():
-		vendor_list[letter.lower()] = vendor_list.pop(letter)
 	vendor_list = OrderedDict(sorted((vendor_list).items()))
 	for letter, vendor in vendor_list.items():
 		vendor = vendor.sort()
@@ -289,15 +287,35 @@ def vendor_request_handler(vendor, request):
 		return render_template(addr, error = error, items = items, brand = brand)
 	elif request.method == 'POST' and (flask_login.current_user.id[0] == vendor or \
 		flask_login.current_user.id[0] == ADMIN):
+		# Add item requests
 		if request.form['action'] == 'add_item':
+			price_with_symbol = request.form['currency_type'] + \
+				request.form['itemPrice']
 			error = add_item(request.form['itemName'], request.form['itemDesc'], \
-			request.files['file'], vendor, request.form['itemPrice'])
+			request.files['file'], vendor, price_with_symbol)
 			if error:
 				items = query_db('select * from items where vendor = ?', [vendor])
 				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
 				return render_template(addr, error = error, items = items, brand = brand)
+		# Delete item requests
 		elif request.form['action'] == 'del_item':
 			delete_item(request.form['itemName'], vendor)
+		# Add drop date requests
+		elif request.form['action'] == 'add_drop':
+			exists = query_db('select * from drops where dropVendor = ?', [vendor])
+			if exists: 
+				error = 'cannot have more than one (1) drop'
+				items = query_db('select * from items where vendor = ?', [vendor])
+				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
+				return render_template(addr, error = error, items = items, brand = brand)
+			date = request.form['drop_date'].split(' \\ ')
+			date[1] = calendar.month_name[int(date[1])][:3]
+			time = request.form['drop_time'] + ':00'
+			js_date = date[1] + ' ' + date[0] + ', ' + date[2] + ' ' + time
+			yes = 'True'
+			insert('drops', ['dropVendor', 'dropDate'], [vendor, js_date])
+			# update_db('update vendors set hasDrop = ? where vendorName = ?', \
+				# [yes, vendor])
 	return redirect(url_for(redir))
 
 
@@ -324,7 +342,8 @@ def brands_request():
 	error = request_handler(request)
 	return redirect(url_for('show_all_brands'))
 
-# View Functions - All of the Brands ###########################################
+
+# View Functions - Individual Vendors ##########################################
 # Alphamotif
 @app.route('/alphamotif')
 def show_alphamotif():
@@ -442,6 +461,15 @@ def show_marble_soda():
 def update_marble_soda(): 
 	return vendor_request_handler('marble_soda', request)
 
+# OH Boi
+@app.route('/oh_boi')
+def show_oh_boi():
+	return show_vendor('oh_boi')
+
+@app.route('/oh_boi', methods = ['GET', 'POST'])
+def update_oh_boi(): 
+	return vendor_request_handler('oh_boi', request)
+
 # Pearly Whites
 @app.route('/pearly_whites')
 def show_pearly_whites():
@@ -459,6 +487,15 @@ def show_ronin_division():
 @app.route('/ronin_division', methods = ['GET', 'POST'])
 def update_ronin_division(): 
 	return vendor_request_handler('ronin_division', request)
+
+# Rude Vogue
+@app.route('/rude_vogue')
+def show_rude_vogue():
+	return show_vendor('rude_vogue')
+
+@app.route('/rude_vogue', methods = ['GET', 'POST'])
+def update_rude_vogue(): 
+	return vendor_request_handler('rude_vogue', request)
 
 # Seance Clothing
 @app.route('/seance_clothing')
@@ -487,6 +524,15 @@ def show_steady_hands_apparel():
 def update_steady_hands_apparel(): 
 	return vendor_request_handler('steady_hands_apparel', request)
 
+# The MSTRPLAN
+@app.route('/the_mstrplan')
+def show_the_mstrplan():
+	return show_vendor('the_mstrplan')
+
+@app.route('/the_mstrplan', methods = ['GET', 'POST'])
+def update_the_mstrplan(): 
+	return vendor_request_handler('the_mstrplan', request)
+
 # VVIDessnce
 @app.route('/vvidessnce')
 def show_vvidessnce():
@@ -495,6 +541,15 @@ def show_vvidessnce():
 @app.route('/vvidessnce', methods = ['GET', 'POST'])
 def update_vvidessnce(): 
 	return vendor_request_handler('vvidessnce', request)
+
+# Windfall Clothing
+@app.route('/windfall_clothing')
+def show_windfall_clothing():
+	return show_vendor('windfall_clothing')
+
+@app.route('/windfall_clothing', methods = ['GET', 'POST'])
+def update_windfall_clothing(): 
+	return vendor_request_handler('windfall_clothing', request)
 
 
 # View Functions - Logout ######################################################
