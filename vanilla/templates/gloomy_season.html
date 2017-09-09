@@ -11,9 +11,22 @@
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/calendar_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="../static/scripts/bootstrap.min.js"></script>
+  
+    <script>
+    $(document).ready(function() {
+      $("#datepicker").datepicker({
+         dateFormat: "dd \\ mm \\ yy",
+        inline: true,
+      });
+    });
+    </script>
   </head>
 
   <body>
@@ -41,6 +54,9 @@
           {% if session.logged_in and (current_user.id[0] == 'gloomy_season' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_drop_btn"><i class="fa fa-calendar-o" aria-hidden="true"></i></button>
           </li>
           {% endif %}
         </ul>
@@ -103,33 +119,33 @@
       <div class="jumbotron">  
         <div class="row">
         {% for item in items %}
-        <div class="col-sm-4 vendor-item">
-          {% if item['price'] %}
-          <div class="item-title">
-            <p>{{ item['itemName'] }} \ <span class="item-price"><small>$</small>{{ item['price'] }}</span></p>
-          </div>
+          <div class="col-sm-4 vendor-item">
+          {% if item['price'][1] %}
+            <div class="item-title">
+              <p>{{ item['itemName'] }} \ <span class="item-price"><small>{{ item['price'][0] }}</small>{{ item['price'][1:] }}</span></p>
+            </div>
           {% else %}
-          <div class="item-title">
-            <p>{{ item['itemName'] }}</p>
-          </div>
+            <div class="item-title">
+              <p>{{ item['itemName'] }}</p>
+            </div>
           {% endif %}
-          <img src="{{ item['pathToImg'] }}">
-          <div class="item-description">
-            <p>{{ item['description'] }}</p>
+            <img src="{{ item['pathToImg'] }}">
+            <div class="item-description">
+              <p>{{ item['description'] }}</p>
+            </div>
+            {% if session.logged_in and (current_user.id[0] == 'gloomy_season' or current_user.id[0] == 'verdeckt_admin') %}
+            <div class="item-delete-btn">
+              <form action="{{ url_for('update_gloomy_season') }}" method="POST">
+                <input type="hidden" name="action" value="del_item"> 
+                <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
+                <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </form>
+            </div>
+            {% endif %}
           </div>
-          {% if session.logged_in and (current_user.id[0] == 'gloomy_season' or current_user.id[0] == 'verdeckt_admin') %}
-          <div class="item-delete-btn">
-            <form action="{{ url_for('update_gloomy_season') }}" method="POST">
-              <input type="hidden" name="action" value="del_item"> 
-              <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
-              <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-            </form>
-          </div>
-          {% endif %}
-        </div>
         {% endfor %}
+        </div>
       </div>
-    </div>
     </div>
 
     <div id="login_btn" class="modal fade" role="dialog">
@@ -194,8 +210,8 @@
           <div class="modal-body">
             <form id="contact_form" action="{{ url_for('show_gloomy_season') }}" method="POST">
               <div class="fields-wrapper">
-                <div class="fields">
-                  <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
+                <div class="fields email-fields">
+                  <input name="email_subject" placeholder="subject"></textarea>
                   <textarea form="contact_form" name="email_content" cols="50" rows="5" placeholder="content"></textarea>
                 </div>
               </div>
@@ -214,22 +230,27 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3>add an item</h3>
-        </div>
-        <div class="modal-body">
-          <form id="new_item_form" action="{{ url_for('update_gloomy_season') }}" method="POST" enctype="multipart/form-data">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>add an item</h3>
+          </div>
+          <div class="modal-body">
+            <form id="new_item_form" action="{{ url_for('update_gloomy_season') }}" method="POST" enctype="multipart/form-data">
             <div class="fields-wrapper">
-              <div class="fields">
-                <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>
-                <textarea form="new_item_form" name="itemDesc" cols="50" rows="5" placeholder="item description" required></textarea>
-                <div class="price-field">
-                  <input type="text" placeholder="price (optional)" name="itemPrice">
-                </div>
+              <div class="fields name-field">
+                <input form="new_item_form" name="itemName" placeholder="item name" required></input>
+                <textarea form="new_item_form" name="itemDesc" placeholder="item description" required></textarea>
                 <div class="file-field">
                   <input type="file" name="file" accept="image/*" required>
+                  <input type="hidden" name="action" value="add_item">
                 </div>
-                <input type="hidden" name="action" value="add_item">
+                <div class="price-field">
+                  <input type="text" placeholder="price (optional)" name="itemPrice">
+                  <select class="currency-selector" name="currency_type">
+                    <option selected="selected">$</option>
+                    <option>&euro;</option>
+                    <option>&pound;</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="submit-wrapper">
@@ -237,13 +258,40 @@
                 <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
               </div>
             </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </body>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../static/scripts/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <div id="add_drop_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>add a drop</h3>
+          </div>
+          <div class="modal-body">
+            <form id="new_drop_form" action="{{ url_for('update_gloomy_season') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">  
+                  <input name="drop_date" id="datepicker" placeholder="dd \ mm \ yy" readonly required />
+                  <input name="drop_time" type="text" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" placeholder="23:59" title="HH:MM (24 hour clock)" required />
+                  <input type="hidden" name="action" value="add_drop">
+                </div>
+              </div>  
+              <div class="submit-wrapper">
+                <div class="submit-btn">
+                  <button type="submit" class="submit-btn" value="add_drop"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></button>
+                  {% if brand['hasDrop'] == 'True' %}
+                  <button type="submit" class="submit-btn" value="del_drop"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></button>
+                  {% endif %}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>   
+  </body>
 </html>

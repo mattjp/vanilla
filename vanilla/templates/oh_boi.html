@@ -51,7 +51,7 @@
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#email_btn"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
           </li>
-          {% if session.logged_in and (current_user.id[0] == 'ronin_division' or current_user.id[0] == 'verdeckt_admin') %}
+          {% if session.logged_in and (current_user.id[0] == 'oh_boi' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
           </li>
@@ -81,10 +81,10 @@
     {% endif %}
 
     <div class="container">
-      <h1><a href="https://www.facebook.com/ronindivision"><small><i class="fa fa-facebook-f" aria-hidden="true"></i></small></a> \ <a href="https://www.instagram.com/ronindivision/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="https://www.ronindivision.com/collections/frontpage">Rōnin Division</a></h1>
+      <h1><a href="https://www.facebook.com/ohboiclthng/"><small><i class="fa fa-facebook-f" aria-hidden="true"></i></small></a> \ <a href="https://www.instagram.com/ohboi.co/"><small><i class="fa fa-instagram" aria-hidden="true"></i></small></a> \ <a href="https://ohboi.co/">OH Boi</a></h1>
       <div class="jumbotron overview">
         <div class="brand-overview">
-          <p>Rōnin is looking to define the culture and experiences of the vagabond, incorporating personality and a unique touch into everything they make in hopes of sharing experiences and stories with anyone willing to listen. Rōnin tries to create an ever-growing family that will one day lead their project to be much more than just a project.</p>
+          <p>Known for it’s 1920s American-cartoon style, OH Boi is an up and coming brand worthy of your attention. While they do print on blanks, this style is extremely difficult to come by and they sell out quickly.</p>
         </div>
       </div>
       <ul class="vendor-tag-list">
@@ -111,7 +111,7 @@
         {% if brand['category'] %}
         <li>{{ brand['category'] }}</li>
         {% endif %}        
-      </ul>  
+      </ul>
     </div>
 
     <div class="container">
@@ -133,9 +133,9 @@
             <div class="item-description">
               <p>{{ item['description'] }}</p>
             </div>
-            {% if session.logged_in and (current_user.id[0] == 'ronin_division' or current_user.id[0] == 'verdeckt_admin') %}
+            {% if session.logged_in and (current_user.id[0] == 'oh_boi' or current_user.id[0] == 'verdeckt_admin') %}
             <div class="item-delete-btn">
-              <form action="{{ url_for('update_ronin_division') }}" method="POST">
+              <form action="{{ url_for('update_oh_boi') }}" method="POST">
                 <input type="hidden" name="action" value="del_item"> 
                 <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
                 <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -156,7 +156,7 @@
             <h3>sign up and\or login</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_ronin_division') }}" method="POST">
+            <form action="{{ url_for('show_oh_boi') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="text" name="email" placeholder="email" required class="right-just">
@@ -183,7 +183,7 @@
             <h3>change your password</h3>
           </div>
           <div class="modal-body">
-            <form action="{{ url_for('show_ronin_division') }}" method="POST">
+            <form action="{{ url_for('show_oh_boi') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">
                   <input type="password" placeholder="new password" name="new_password" required>
@@ -208,7 +208,7 @@
             <h3>email us</h3>
           </div>
           <div class="modal-body">
-            <form id="contact_form" action="{{ url_for('show_ronin_division') }}" method="POST">
+            <form id="contact_form" action="{{ url_for('show_oh_boi') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields email-fields">
                   <input name="email_subject" placeholder="subject"></textarea>
@@ -234,7 +234,7 @@
             <h3>add an item</h3>
           </div>
           <div class="modal-body">
-            <form id="new_item_form" action="{{ url_for('update_ronin_division') }}" method="POST" enctype="multipart/form-data">
+            <form id="new_item_form" action="{{ url_for('update_oh_boi') }}" method="POST" enctype="multipart/form-data">
             <div class="fields-wrapper">
               <div class="fields name-field">
                 <input form="new_item_form" name="itemName" placeholder="item name" required></input>
@@ -272,7 +272,7 @@
             <h3>add a drop</h3>
           </div>
           <div class="modal-body">
-            <form id="new_drop_form" action="{{ url_for('update_ronin_division') }}" method="POST">
+            <form id="new_drop_form" action="{{ url_for('update_oh_boi') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields">  
                   <input name="drop_date" id="datepicker" placeholder="dd \ mm \ yy" readonly required />
