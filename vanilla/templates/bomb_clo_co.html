@@ -103,33 +103,33 @@
       <div class="jumbotron">  
         <div class="row">
         {% for item in items %}
-        <div class="col-sm-4 vendor-item">
-          {% if item['price'] %}
-          <div class="item-title">
-            <p>{{ item['itemName'] }} \ <span class="item-price"><small>$</small>{{ item['price'] }}</span></p>
-          </div>
+          <div class="col-sm-4 vendor-item">
+          {% if item['price'][1] %}
+            <div class="item-title">
+              <p>{{ item['itemName'] }} \ <span class="item-price"><small>{{ item['price'][0] }}</small>{{ item['price'][1:] }}</span></p>
+            </div>
           {% else %}
-          <div class="item-title">
-            <p>{{ item['itemName'] }}</p>
-          </div>
+            <div class="item-title">
+              <p>{{ item['itemName'] }}</p>
+            </div>
           {% endif %}
-          <img src="{{ item['pathToImg'] }}">
-          <div class="item-description">
-            <p>{{ item['description'] }}</p>
+            <img src="{{ item['pathToImg'] }}">
+            <div class="item-description">
+              <p>{{ item['description'] }}</p>
+            </div>
+            {% if session.logged_in and (current_user.id[0] == 'bomb_clo_co' or current_user.id[0] == 'verdeckt_admin') %}
+            <div class="item-delete-btn">
+              <form action="{{ url_for('update_bomb_clo_co') }}" method="POST">
+                <input type="hidden" name="action" value="del_item"> 
+                <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
+                <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </form>
+            </div>
+            {% endif %}
           </div>
-          {% if session.logged_in and (current_user.id[0] == 'bomb_clo_co' or current_user.id[0] == 'verdeckt_admin') %}
-          <div class="item-delete-btn">
-            <form action="{{ url_for('update_bomb_clo_co') }}" method="POST">
-              <input type="hidden" name="action" value="del_item"> 
-              <input type="hidden" name="itemName" value="{{ item['itemName'] }}">
-              <button type="submit" value="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-            </form>
-          </div>
-          {% endif %}
-        </div>
         {% endfor %}
+        </div>
       </div>
-    </div>
     </div>
 
     <div id="login_btn" class="modal fade" role="dialog">
@@ -194,8 +194,8 @@
           <div class="modal-body">
             <form id="contact_form" action="{{ url_for('show_bomb_clo_co') }}" method="POST">
               <div class="fields-wrapper">
-                <div class="fields">
-                  <textarea form="contact_form" name="email_subject" cols="50" rows="1" placeholder="subject"></textarea>
+                <div class="fields email-fields">
+                  <input name="email_subject" placeholder="subject"></textarea>
                   <textarea form="contact_form" name="email_content" cols="50" rows="5" placeholder="content"></textarea>
                 </div>
               </div>
@@ -214,22 +214,27 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3>add an item</h3>
-        </div>
-        <div class="modal-body">
-          <form id="new_item_form" action="{{ url_for('update_bomb_clo_co') }}" method="POST" enctype="multipart/form-data">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>add an item</h3>
+          </div>
+          <div class="modal-body">
+            <form id="new_item_form" action="{{ url_for('update_bomb_clo_co') }}" method="POST" enctype="multipart/form-data">
             <div class="fields-wrapper">
-              <div class="fields">
-                <textarea form="new_item_form" name="itemName" cols="50" rows="1" placeholder="item name" required></textarea>
-                <textarea form="new_item_form" name="itemDesc" cols="50" rows="5" placeholder="item description" required></textarea>
-                <div class="price-field">
-                  <input type="text" placeholder="price (optional)" name="itemPrice">
-                </div>
+              <div class="fields name-field">
+                <input form="new_item_form" name="itemName" placeholder="item name" required></input>
+                <textarea form="new_item_form" name="itemDesc" placeholder="item description" required></textarea>
                 <div class="file-field">
                   <input type="file" name="file" accept="image/*" required>
+                  <input type="hidden" name="action" value="add_item">
                 </div>
-                <input type="hidden" name="action" value="add_item">
+                <div class="price-field">
+                  <input type="text" placeholder="price (optional)" name="itemPrice">
+                  <select class="currency-selector" name="currency_type">
+                    <option selected="selected">$</option>
+                    <option>&euro;</option>
+                    <option>&pound;</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="submit-wrapper">
@@ -237,7 +242,8 @@
                 <button type="submit" class="submit-btn" value="upload_item"><i class="fa fa-plus" aria-hidden="true"></i></button>
               </div>
             </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
