@@ -199,8 +199,6 @@ def find_all_vendors():
 	for vendor in all_vendors:
 		vendor_list[vendor['vendorName'][0]].append((vendor['vendorName'], \
 			vendor['displayName']))
-	# for letter, vendor in vendor_list.items():
-		# vendor_list[letter.lower()] = vendor_list.pop(letter)
 	vendor_list = OrderedDict(sorted((vendor_list).items()))
 	for letter, vendor in vendor_list.items():
 		vendor = vendor.sort()
@@ -314,10 +312,10 @@ def vendor_request_handler(vendor, request):
 			date[1] = calendar.month_name[int(date[1])][:3]
 			time = request.form['drop_time'] + ':00'
 			js_date = date[1] + ' ' + date[0] + ', ' + date[2] + ' ' + time
-			# print(js_date)
+			yes = 'True'
 			insert('drops', ['dropVendor', 'dropDate'], [vendor, js_date])
-			update_db('update vendors set hasDrop = ? where vendorName = ?', \
-				['True', vendor])
+			# update_db('update vendors set hasDrop = ? where vendorName = ?', \
+				# [yes, vendor])
 	return redirect(url_for(redir))
 
 
