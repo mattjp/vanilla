@@ -11,9 +11,22 @@
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='styles/calendar_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Slab:100" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="../static/scripts/bootstrap.min.js"></script>
+  
+    <script>
+    $(document).ready(function() {
+      $("#datepicker").datepicker({
+         dateFormat: "dd \\ mm \\ yy",
+        inline: true,
+      });
+    });
+    </script>
   </head>
 
   <body>
@@ -41,6 +54,9 @@
           {% if session.logged_in and (current_user.id[0] == 'bomb_clo_co' or current_user.id[0] == 'verdeckt_admin') %}
           <li>
             <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </li>
+          <li>
+            <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add_drop_btn"><i class="fa fa-calendar-o" aria-hidden="true"></i></button>
           </li>
           {% endif %}
         </ul>
@@ -247,9 +263,35 @@
         </div>
       </div>
     </div>
-  </body>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../static/scripts/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <div id="add_drop_btn" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3>add a drop</h3>
+          </div>
+          <div class="modal-body">
+            <form id="new_drop_form" action="{{ url_for('update_bomb_clo_co') }}" method="POST">
+              <div class="fields-wrapper">
+                <div class="fields">  
+                  <input name="drop_date" id="datepicker" placeholder="dd \ mm \ yy" readonly required />
+                  <input name="drop_time" type="text" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" placeholder="23:59" title="HH:MM (24 hour clock)" required />
+                  <input type="hidden" name="action" value="add_drop">
+                </div>
+              </div>  
+              <div class="submit-wrapper">
+                <div class="submit-btn">
+                  <button type="submit" class="submit-btn" value="add_drop"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></button>
+                  {% if brand['hasDrop'] == 'True' %}
+                  <button type="submit" class="submit-btn" value="del_drop"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></button>
+                  {% endif %}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>   
+  </body>
 </html>
