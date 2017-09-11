@@ -215,7 +215,7 @@
       sec.push(Math.floor((dist % (1000 * 60)) / 1000));
     }
     {% if drops[0] %}
-    document.getElementById("{{ drops[0]['tid'] }}").innerHTML = day[0] + "d \\ " + hour[0] + "h \\ " + min[0] + "m \\ " + sec[0] + "s \\ ";
+    document.getElementById("{{ drops[0]['tid'] }}").innerHTML = day[0] + "d \\ " + hour[0] + "h \\ " + min[0] + "m \\ " + sec[0] + "s";
     {% endif %}
     {% if drops[1] %}
     document.getElementById("{{ drops[1]['tid'] }}").innerHTML = day[1] + "d \\ " + hour[1] + "h \\ " + min[1] + "m \\ " + sec[1] + "s";
