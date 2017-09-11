@@ -658,7 +658,8 @@
 		box-sizing: border-box;
 		border: 1px solid #554853;
 		padding: 5px;
-		margin: 2px;
+		margin-bottom: 0.6em;
+		margin-top: 0 !important;
 		transition-duration: 0.3s;
 		text-align: center;
 		width: 10%;

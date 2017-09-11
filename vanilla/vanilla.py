@@ -44,8 +44,8 @@ mail = Mail(app)
 
 # Database Functions ###########################################################
 def connect_db():
-	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
-	# rv = sqlite3.connect(app.config['DATABASE'])
+	# rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
+	rv = sqlite3.connect(app.config['DATABASE'])
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -166,9 +166,9 @@ def complete_login(id, cur_type):
 def delete_item(item_name, vendor):
 	path = query_db('select * from items where vendor = ? and itemName = ?', \
 		[vendor, item_name], True)['pathToImg'][3:]
-	full_path = '/var/www/html/vanilla/' + path # TODO: Server path
-	os.remove(full_path) # TODO: Server version
-	# os.remove(path)
+	# full_path = '/var/www/html/vanilla/' + path # TODO: Server path
+	# os.remove(full_path) # TODO: Server version
+	os.remove(path)
 	delete_from_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
@@ -182,8 +182,8 @@ def add_item(item_name, item_desc, item_img, vendor, item_price):
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
-	item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
-	# item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+	# item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
+	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
 		[item_name, item_desc, vendor, full_path, item_price])
 	return None
@@ -274,7 +274,8 @@ def show_vendor(vendor):
 	addr = vendor + '.html'
 	items = query_db('select * from items where vendor = ?', [vendor])
 	brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
-	return render_template(addr, items = items, brand = brand)
+	drop = query_db('select * from drops where dropVendor = ?', [vendor], True)
+	return render_template(addr, items = items, brand = brand, drop = drop)
 
 # Handle requests for a vendor page
 def vendor_request_handler(vendor, request):
@@ -284,7 +285,8 @@ def vendor_request_handler(vendor, request):
 	if error: 
 		items = query_db('select * from items where vendor = ?', [vendor])
 		brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
-		return render_template(addr, error = error, items = items, brand = brand)
+		drop = query_db('select * from drops where dropVendor = ?', [vendor], True)
+		return render_template(addr, error = error, items = items, brand = brand, drop = drop)
 	elif request.method == 'POST' and (flask_login.current_user.id[0] == vendor or \
 		flask_login.current_user.id[0] == ADMIN):
 		# Add item requests
@@ -296,7 +298,8 @@ def vendor_request_handler(vendor, request):
 			if error:
 				items = query_db('select * from items where vendor = ?', [vendor])
 				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
-				return render_template(addr, error = error, items = items, brand = brand)
+				drop = query_db('select * from drops where dropVendor = ?', [vendor], True)
+				return render_template(addr, error = error, items = items, brand = brand, drop = drop)
 		# Delete item requests
 		elif request.form['action'] == 'del_item':
 			delete_item(request.form['itemName'], vendor)
@@ -307,27 +310,33 @@ def vendor_request_handler(vendor, request):
 				error = 'cannot have more than one (1) drop'
 				items = query_db('select * from items where vendor = ?', [vendor])
 				brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
-				return render_template(addr, error = error, items = items, brand = brand)
+				drop = query_db('select * from drops where dropVendor = ?', [vendor], True)
+				return render_template(addr, error = error, items = items, brand = brand, drop = drop)
 			date = request.form['drop_date'].split(' \\ ')
 			date[1] = calendar.month_name[int(date[1])][:3]
 			time = request.form['drop_time'] + ':00'
 			js_date = date[1] + ' ' + date[0] + ', ' + date[2] + ' ' + time
-			yes = 'True'
-			insert('drops', ['dropVendor', 'dropDate'], [vendor, js_date])
-			# update_db('update vendors set hasDrop = ? where vendorName = ?', \
-				# [yes, vendor])
+			displayName = query_db('select * from vendors where vendorName = ?', \
+				[vendor], True)['displayName']
+			view_path = 'show_' + vendor
+			insert('drops', ['dropVendor', 'dropDate', 'view_path'], \
+				[displayName, js_date, view_path])
+		elif request.form['action'] == 'del_drop':
+			delete_from_db('delete from drops where dropVendor = ?', [vendor])
 	return redirect(url_for(redir))
 
 
 # View Functions - Home ########################################################
 @app.route('/')
 def show_home():
-	return render_template('home.html')
+	drops = query_db('select * from drops limit 4')
+	return render_template('home.html', drops = drops)
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
 	error = request_handler(request)
-	return render_template('home.html', error = error)
+	drops = query_db('select * from drops limit 4')
+	return render_template('home.html', error = error, drops = drops)
 
 
 # View Functions - Brands ######################################################
@@ -562,6 +571,6 @@ def logout():
 
 # Run Function #################################################################
 if __name__ == '__main__':
-	app.run(host='0.0.0.0') # TODO: Server run
-	# app.run(debug = True)
+	# app.run(host='0.0.0.0') # TODO: Server run
+	app.run(debug = True)
 
