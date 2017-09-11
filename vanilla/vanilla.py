@@ -44,8 +44,8 @@ mail = Mail(app)
 
 # Database Functions ###########################################################
 def connect_db():
-	# rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
-	rv = sqlite3.connect(app.config['DATABASE'])
+	rv = sqlite3.connect('/var/www/html/vanilla/vanilla.db') # TODO: Server Path
+	# rv = sqlite3.connect(app.config['DATABASE'])
 	rv.row_factory = sqlite3.Row
 	return rv
 
@@ -166,9 +166,9 @@ def complete_login(id, cur_type):
 def delete_item(item_name, vendor):
 	path = query_db('select * from items where vendor = ? and itemName = ?', \
 		[vendor, item_name], True)['pathToImg'][3:]
-	# full_path = '/var/www/html/vanilla/' + path # TODO: Server path
-	# os.remove(full_path) # TODO: Server version
-	os.remove(path)
+	full_path = '/var/www/html/vanilla/' + path # TODO: Server path
+	os.remove(full_path) # TODO: Server version
+	# os.remove(path)
 	delete_from_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
@@ -182,8 +182,8 @@ def add_item(item_name, item_desc, item_img, vendor, item_price):
 	app.config['UPLOAD_FOLDER'] = folder
 	fname = secure_filename(item_img.filename)
 	full_path = '../' + folder + fname
-	# item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
-	item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+	item_img.save('/var/www/html/vanilla/' + folder + fname) # TODO: Server path
+	# item_img.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
 	insert('items', ['itemName', 'description', 'vendor', 'pathToImg', 'price'], \
 		[item_name, item_desc, vendor, full_path, item_price])
 	return None
@@ -571,6 +571,6 @@ def logout():
 
 # Run Function #################################################################
 if __name__ == '__main__':
-	# app.run(host='0.0.0.0') # TODO: Server run
-	app.run(debug = True)
+	app.run(host='0.0.0.0') # TODO: Server run
+	# app.run(debug = True)
 
