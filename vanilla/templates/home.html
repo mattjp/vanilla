@@ -214,25 +214,12 @@
       min.push(Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)));
       sec.push(Math.floor((dist % (1000 * 60)) / 1000));
     }
-    {% if drops[0] %}
-    document.getElementById("{{ drops[0]['tid'] }}").innerHTML = day[0] + "d \\ " + hour[0] + "h \\ " + min[0] + "m \\ " + sec[0] + "s";
-    {% endif %}
-    {% if drops[1] %}
-    document.getElementById("{{ drops[1]['tid'] }}").innerHTML = day[1] + "d \\ " + hour[1] + "h \\ " + min[1] + "m \\ " + sec[1] + "s";
-    {% endif %}
-    {% if drops[2] %}
-    document.getElementById("{{ drops[2]['tid'] }}").innerHTML = day[2] + "d \\ " + hour[2] + "h \\ " + min[2] + "m \\ " + sec[2] + "s";
-    {% endif %}
-    {% if drops[3] %}
-    document.getElementById("{{ drops[3]['tid'] }}").innerHTML = day[3] + "d \\ " + hour[3] + "h \\ " + min[3] + "m \\ " + sec[3] + "s";
-    {% endif %}
+    var j = 0;
+    {% for drop in drops %}
+      document.getElementById("{{ drop['tid'] }}").innerHTML = day[j] + "d \\ " + hour[j] + "h \\ " + min[j] + "m \\ " + sec[j] + "s";
+      j++;
+    {% endfor %}
   }, 1000);
-
-  
-
-  // {% for drop in drops %}
-    // document.getElementById("{{ drop['tid'] }}").innerHTML = day[0] + "d " + hour +"h " + min + "m " + sec + "s";
-  // {% endfor %}
 
   
       
@@ -254,66 +241,6 @@
     //   }
     // }, 1000);
 
-    // var countDownDate1;
-  // var countDownDate2;
-  // var countDownDate3;
-  // var countDownDate4;
-
-  //   {% if drops[0] %}
-  //   countDownDate1 = new Date("{{ drops[0]['dropDate'] }}").getTime();
-  //   {% endif %}
-  //   {% if drops[1] %}
-  //   countDownDate2 = new Date("{{ drops[1]['dropDate'] }}").getTime();
-  //   {% endif %}
-  //   {% if drops[2] %}
-  //   countDownDate3 = new Date("{{ drops[2]['dropDate'] }}").getTime();
-  //   {% endif %}
-  //   {% if drops[3] %}
-  //   countDownDate4 = new Date("{{ drops[3]['dropDate'] }}").getTime();
-  //   {% endif %}
-
-  // var x = setInterval(function() {
-
-    //   var now = new Date().getTime();
-    //   var distance1 = countDownDate1 - now;
-    //   var distance2 = countDownDate2 - now;
-    //   var distance3 = countDownDate3 - now;
-    //   var distance4 = countDownDate4 - now;
-
-    //   var days1 = Math.floor(distance1 / (1000 * 60 * 60 * 24));
-    //   var hours1 = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //   var minutes1 = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
-    //   var seconds1 = Math.floor((distance1 % (1000 * 60)) / 1000);
-
-    //   var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
-    //   var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //   var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
-    //   var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
-
-    //   var days3 = Math.floor(distance3 / (1000 * 60 * 60 * 24));
-    //   var hours3 = Math.floor((distance3 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //   var minutes3 = Math.floor((distance3 % (1000 * 60 * 60)) / (1000 * 60));
-    //   var seconds3 = Math.floor((distance3 % (1000 * 60)) / 1000);
-
-    //   var days4 = Math.floor(distance4 / (1000 * 60 * 60 * 24));
-    //   var hours4 = Math.floor((distance4 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //   var minutes4 = Math.floor((distance4 % (1000 * 60 * 60)) / (1000 * 60));
-    //   var seconds4 = Math.floor((distance4 % (1000 * 60)) / 1000);
-
-    // {% if drops[0] %}
-      // document.getElementById("{{ drops[0]['tid'] }}").innerHTML = days1 + " \\ " + hours1 + " \\ " + minutes1 + " \\ " + seconds1;
-      // {% endif %}
-
-      // {% if drops[1] %}
-      // document.getElementById("{{ drops[1]['tid'] }}").innerHTML = days2 + " \\ " + hours2 + " \\ " + minutes2 + " \\ " + seconds2;
-      // {% endif %}
-
-      // {% if drops[2] %}
-      // document.getElementById("{{ drops[2]['tid'] }}").innerHTML = days3 + " \\ " + hours3 + " \\ " + minutes3 + " \\ " + seconds3;
-      // {% endif %}
-
-      // {% if drops[3] %}
-      // document.getElementById("{{ drops[3]['tid'] }}").innerHTML = days4 + " \\ " + hours4 + " \\ " + minutes4 + " \\ " + seconds4;
-      // {% endif %}
+    
   </script>
 </html>
