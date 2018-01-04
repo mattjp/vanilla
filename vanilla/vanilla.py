@@ -30,12 +30,12 @@ ADMIN = 'verdeckt_admin'
 
 app.config.update(dict(
 	DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db'),
-	SECRET_KEY = '***REMOVED***', 
+	SECRET_KEY = 'knuckle puck crew fuck you', 
 	MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com',
 	MAIL_PORT = 25,
 	MAIL_USE_TLS = True,
-	MAIL_USERNAME = '***REMOVED***',
-	MAIL_PASSWORD = '***REMOVED***'
+	MAIL_USERNAME = 'AKIAIRG2N35PPM6V52FA',
+	MAIL_PASSWORD = 'AvKIR1CCbqDMDwRBIQId1jJKU57P6THRb4wvIpK24SlD'
 ))
 
 app.config.from_envvar('VANILLA_SETTINGS', silent = True)
@@ -82,17 +82,11 @@ def insert(table, fields = (), values = ()):
 	cur.commit()
 	cur.close()
 
-def delete_from_db(query, args = ()):
-	cur = get_db()
-	cur.execute(query, args)
-	cur.commit()
-	cur.close()
-
 def update_db(query, args = ()):
 	cur = get_db()
 	cur.execute(query, args)
 	cur.commit()
-	cur.close()
+	# cur.close()
 
 
 # Command Line Functions #######################################################
@@ -169,7 +163,7 @@ def delete_item(item_name, vendor):
 	full_path = '/var/www/html/vanilla/' + path # TODO: Server path
 	os.remove(full_path) # TODO: Server version
 	# os.remove(path)
-	delete_from_db('delete from items where vendor = ? and itemName = ?', \
+	update_db('delete from items where vendor = ? and itemName = ?', \
 		[vendor, item_name])
 
 # Add item to vendor page
@@ -266,6 +260,13 @@ def request_handler(request):
 	# Handle send-email requests
 	elif request.method == 'POST' and request.form['action'] == 'email':
 		send_email(request.form['email_subject'], request.form['email_content'])
+	# Handle delete drop requests
+	elif request.method == 'POST' and request.form['action'] == 'remove_drop':
+		to_delete = query_db('select * from drops', [], True)
+		if to_delete:
+			update_db('delete from drops where tid = ?', [to_delete['tid']])
+		else:
+			print('Why would this happen?')
 	# Return any errors 
 	return error
 
@@ -274,7 +275,7 @@ def show_vendor(vendor):
 	addr = vendor + '.html'
 	items = query_db('select * from items where vendor = ?', [vendor])
 	brand = query_db('select * from vendors where vendorName = ?', [vendor], True)
-	drop = query_db('select * from drops where dropVendor = ?', [vendor], True)
+	drop = query_db('select * from drops where view_path = ?', ['show_' + vendor], True)
 	return render_template(addr, items = items, brand = brand, drop = drop)
 
 # Handle requests for a vendor page
@@ -305,7 +306,7 @@ def vendor_request_handler(vendor, request):
 			delete_item(request.form['itemName'], vendor)
 		# Add drop date requests
 		elif request.form['action'] == 'add_drop':
-			exists = query_db('select * from drops where dropVendor = ?', [vendor])
+			exists = query_db('select * from drops where view_path = ?', [redir])
 			if exists: 
 				error = 'cannot have more than one (1) drop'
 				items = query_db('select * from items where vendor = ?', [vendor])
@@ -318,24 +319,23 @@ def vendor_request_handler(vendor, request):
 			js_date = date[1] + ' ' + date[0] + ', ' + date[2] + ' ' + time
 			displayName = query_db('select * from vendors where vendorName = ?', \
 				[vendor], True)['displayName']
-			view_path = 'show_' + vendor
 			insert('drops', ['dropVendor', 'dropDate', 'view_path'], \
-				[displayName, js_date, view_path])
+				[displayName, js_date, redir])
 		elif request.form['action'] == 'del_drop':
-			delete_from_db('delete from drops where dropVendor = ?', [vendor])
+			update_db('delete from drops where view_path = ?', [redir])
 	return redirect(url_for(redir))
 
 
 # View Functions - Home ########################################################
 @app.route('/')
 def show_home():
-	drops = query_db('select * from drops limit 4')
+	drops = query_db('select * from drops order by dropDate limit 4')
 	return render_template('home.html', drops = drops)
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
 	error = request_handler(request)
-	drops = query_db('select * from drops limit 4')
+	drops = query_db('select * from drops order by dropDate limit 4')
 	return render_template('home.html', error = error, drops = drops)
 
 
