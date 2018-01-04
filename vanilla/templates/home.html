@@ -62,6 +62,7 @@
     <div class="container">
       <h1>drops</h1>
       <div class="jumbotron">
+        {% if drops %}
         {% for drop in drops %}
         {% if drop %}
         <div class="col-sm-3 padding-sm">
@@ -75,6 +76,7 @@
         </div>
         {% endif %}
         {% endfor %}
+        {% endif %}
       </div>
     </div>
 
@@ -176,7 +178,7 @@
             <form id="contact_form" action="{{ url_for('show_home') }}" method="POST">
               <div class="fields-wrapper">
                 <div class="fields email-fields">
-                  <input name="email_subject" placeholder="subject"></textarea>
+                  <input name="email_subject" placeholder="subject">
                   <textarea form="contact_form" name="email_content" cols="50" rows="5" placeholder="content"></textarea>
                 </div>
               </div>
@@ -189,7 +191,15 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
+
+    <form id="remove-drop" method="POST" action="{{ url_for('show_home') }}">
+      <input type="hidden" name="action" value="remove_drop">
+      {% if drops[0] %}
+      <input type="hidden" name="drop-vendor" value="{{ drops[0]['dropVendor'] }}">
+      {% endif %}
+    </form>
+
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="../static/scripts/bootstrap.min.js"></script>
@@ -197,9 +207,11 @@
 
   <script>
   var countDownDates = [];
+  {% if drops %}
   {% for drop in drops %}
     countDownDates.push(new Date("{{ drop['dropDate'] }}").getTime());
   {% endfor %}
+  {% endif %}
 
   var x = setInterval(function() {
     var day = [];
@@ -213,12 +225,17 @@
       hour.push(Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
       min.push(Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)));
       sec.push(Math.floor((dist % (1000 * 60)) / 1000));
+      if(dist < 0) {
+        $('#remove-drop').submit();
+      }
     }
     var j = 0;
+    {% if drops %}
     {% for drop in drops %}
       document.getElementById("{{ drop['tid'] }}").innerHTML = day[j] + "d \\ " + hour[j] + "h \\ " + min[j] + "m \\ " + sec[j] + "s";
       j++;
     {% endfor %}
+    {% endif %}
   }, 1000);
 
   
