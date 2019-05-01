@@ -1,4 +1,5 @@
 import os, sqlite3, re, flask_login, calendar
+import secrets
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_bcrypt import Bcrypt
@@ -30,12 +31,12 @@ ADMIN = 'verdeckt_admin'
 
 app.config.update(dict(
 	DATABASE = os.path.join(PROJECT_ROOT, 'vanilla.db'),
-	SECRET_KEY = '***REMOVED***', 
+	SECRET_KEY = secrets.SECRET_KEY, 
 	MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com',
 	MAIL_PORT = 25,
 	MAIL_USE_TLS = True,
-	MAIL_USERNAME = '***REMOVED***',
-	MAIL_PASSWORD = '***REMOVED***'
+	MAIL_USERNAME = secrets.MAIL_USERNAME,
+	MAIL_PASSWORD = secrets.MAIL_PASSWORD
 ))
 
 app.config.from_envvar('VANILLA_SETTINGS', silent = True)

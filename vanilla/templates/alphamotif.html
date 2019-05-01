@@ -285,10 +285,10 @@
                 </div>
               </div>
             </form>
-            <form id="new_drop_form" action="{{ url_for('update_alphamotif') }}" method="POST">
+            <form id="del_drop_form" action="{{ url_for('update_alphamotif') }}" method="POST">
               <div class="submit-wrapper">
                 <div class="submit-btn">
-                  {% if drop['dropVendor'] %}
+                  {% if drop %}
                   <button type="submit" class="submit-btn" name="action" value="del_drop"><i class="fa fa-calendar-times-o" aria-hidden="true"></i></button>
                   {% endif %}
                 </div>
